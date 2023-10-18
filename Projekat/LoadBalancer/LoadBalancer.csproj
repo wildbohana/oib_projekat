@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{22B61B93-5CC8-441A-BF0D-63748AB84CBA}</ProjectGuid>
+    <ProjectGuid>{8B1E6B48-C285-4A18-9036-B07847B4AD5A}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ElectricityMeter</RootNamespace>
-    <AssemblyName>ElectricityMeter</AssemblyName>
+    <RootNamespace>LoadBalancer</RootNamespace>
+    <AssemblyName>LoadBalancer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

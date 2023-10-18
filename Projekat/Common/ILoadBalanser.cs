@@ -8,10 +8,18 @@ using System.Threading.Tasks;
 namespace Common
 {
     [ServiceContract]
-    public interface IServer
+    public interface ILoadBalanser
     {
         // Mock funkcija
         [OperationContract]
-        void PosaljiZahtev();
+        void DelegirajZahtev();
+
+        // Mock funkcija
+        [OperationContract]
+        void WorkerPrijava();
+
+        // Mock funkcija
+        [OperationContract]
+        void WorkerOdjava();
     }
 }

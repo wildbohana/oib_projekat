@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace Common
 {
     [ServiceContract]
-    public interface IServer
+    public interface IRadnik
     {
         // Mock funkcija
         [OperationContract]
-        void PosaljiZahtev();
+        void ObradaZahteva();
     }
 }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ElectricityMeter")]
+[assembly: AssemblyTitle("LoadBalancer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ElectricityMeter")]
+[assembly: AssemblyProduct("LoadBalancer")]
 [assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("22b61b93-5cc8-441a-bf0d-63748ab84cba")]
+[assembly: Guid("8b1e6b48-c285-4a18-9036-b07847b4ad5a")]
 
 // Version information for an assembly consists of the following four values:
 //

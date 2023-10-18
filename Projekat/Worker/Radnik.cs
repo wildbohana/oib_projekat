@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectricityMeter
+namespace Worker
 {
-    public class Program
+    public class Radnik
     {
-        static void Main(string[] args)
-        {
 
-        }
     }
 }
