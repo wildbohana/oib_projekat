@@ -13,8 +13,13 @@ namespace Client
         // Kanal za konekciju
         public IServer kanal;
 
-        // Konstruktor
+        // Konstruktori
         public Klijent(NetTcpBinding binding, EndpointAddress address) : base(binding, address)
+        {
+            kanal = this.CreateChannel();
+        }
+
+        public Klijent(NetTcpBinding binding, string address) : base(binding, address)
         {
             kanal = this.CreateChannel();
         }
