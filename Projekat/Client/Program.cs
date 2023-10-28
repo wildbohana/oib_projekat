@@ -21,6 +21,8 @@ namespace Client
             binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
 
             Console.WriteLine("Korisnik koji je pokrenuo klijenta je: " + WindowsIdentity.GetCurrent().Name);
+            Console.WriteLine("Tip autentifikacije: " + WindowsIdentity.GetCurrent().AuthenticationType);
+            Console.WriteLine("ID korisnika: " + WindowsIdentity.GetCurrent().User);
 
             using (Klijent proxy = new Klijent(binding, address))
             {
