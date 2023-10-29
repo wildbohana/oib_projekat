@@ -10,10 +10,10 @@ namespace LoadBalancer
 {
     public class LoadBalanser : ILoadBalanser
     {
+        // TODO menjaj kasnije
         // Prosleđivanje zahteva ka nekoj od Worker komponenti
         // Za sad je samo jedan Worker, kasnije se proširuje za n komada
-        // TODO menjaj kasnije
-        public void DelegirajZahtev()
+        public List<string> DelegirajZahtev(List<string> zahtev)
         {
             NetTcpBinding binding = new NetTcpBinding();
             string adresa = "net.tcp://localhost:9997/Radnik";
@@ -25,21 +25,11 @@ namespace LoadBalancer
             ChannelFactory<IRadnik> kanal = new ChannelFactory<IRadnik>(binding, new EndpointAddress(adresa));
             IRadnik proksi = kanal.CreateChannel();
 
-            proksi.ObradaZahteva();
+            List<string> rezultat = proksi.ObradaZahteva(zahtev);
 
             Console.WriteLine("Zahtev je prosleđen radniku.");
+            return rezultat;
         }
 
-        // TODO kasnije
-        public void WorkerOdjava()
-        {
-            throw new NotImplementedException();
-        }
-
-        // TODO kasnije
-        public void WorkerPrijava()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

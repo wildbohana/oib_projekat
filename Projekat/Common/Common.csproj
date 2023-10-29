@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ILoadBalanser.cs" />
+    <Compile Include="IPrijavaRadnika.cs" />
     <Compile Include="IRadnik.cs" />
     <Compile Include="IServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

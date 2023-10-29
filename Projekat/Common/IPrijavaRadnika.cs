@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 namespace Common
 {
-    [ServiceContract]
-    public interface ILoadBalanser
+    public interface IPrijavaRadnika
     {
+
         // Mock funkcija
         [OperationContract]
-        List<string> DelegirajZahtev(List<string> zahtev);
+        void Prijava();
+
+        // Mock funkcija
+        [OperationContract]
+        void Odjava();
     }
 }

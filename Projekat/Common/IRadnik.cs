@@ -10,8 +10,7 @@ namespace Common
     [ServiceContract]
     public interface IRadnik
     {
-        // Mock funkcija
         [OperationContract]
-        void ObradaZahteva();
+        List<string> ObradaZahteva(List<string> zahtev);
     }
 }

@@ -12,9 +12,13 @@ namespace Worker
     {
         static void Main(string[] args)
         {
+            // Osnovni port + broj aktivnih radnika = broj porta novog radnika
+            int osnovniPort = 9950;
+
             NetTcpBinding binding = new NetTcpBinding();
             string adresa = "net.tcp://localhost:9997/Radnik";
 
+            // TODO - izmeni u sertifikate
             binding.Security.Mode = SecurityMode.Transport;
             binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;

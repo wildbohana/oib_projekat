@@ -1,0 +1,5 @@
+id,ime,prezime,potrošnja
+
+---
+
+id - 8-cifren broj
