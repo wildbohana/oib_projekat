@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 namespace Common
 {
+    [ServiceContract]
     public interface IPrijavaRadnika
     {
-
-        // Mock funkcija
         [OperationContract]
-        void Prijava();
+        void Prijava(int id);
 
-        // Mock funkcija
         [OperationContract]
-        void Odjava();
+        void Odjava(int id);
+
+        [OperationContract]
+        int DodeliID();
     }
 }

@@ -20,17 +20,14 @@ namespace Client
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
             binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
 
-            // Autentifikacija sa drugih vežbi
-            /*
-            Console.WriteLine("Korisnik koji je pokrenuo klijenta je: " + WindowsIdentity.GetCurrent().Name);
-            Console.WriteLine("Tip autentifikacije: " + WindowsIdentity.GetCurrent().AuthenticationType);
-            Console.WriteLine("ID korisnika: " + WindowsIdentity.GetCurrent().User);
-            */
-
             try
             {
                 Klijent proksi = new Klijent(binding, adresa);
+
+                // Autentifikacija
                 Console.WriteLine("Klijenta je pokrenuo korisnik: " + WindowsIdentity.GetCurrent().Name + "\n");
+                Console.WriteLine("Tip autentifikacije: " + WindowsIdentity.GetCurrent().AuthenticationType);
+                Console.WriteLine("ID korisnika: " + WindowsIdentity.GetCurrent().User);
 
                 Meni(proksi);
 
@@ -42,7 +39,6 @@ namespace Client
                 Console.WriteLine("\nDesila se greska!\n" + e.Message);
                 Console.ReadKey();
             }
-
         }
 
         #region MENI

@@ -10,11 +10,35 @@ namespace LoadBalancer
 {
     public class LoadBalanser : ILoadBalanser
     {
-        // TODO menjaj kasnije
-        // Prosleđivanje zahteva ka nekoj od Worker komponenti
-        // Za sad je samo jedan Worker, kasnije se proširuje za n komada
+        static int poslednjiRadnik = -1;
+
+        // Prosleđivanje zahteva ka nekom od Radnika
         public List<string> DelegirajZahtev(List<string> zahtev)
         {
+            poslednjiRadnik = (poslednjiRadnik + 1) % (PrijavaRadnika.Radnici.Count);
+            List<string> rezultat = new List<string>();
+
+            // Ako postoje radnici, proveri da li je neki od njih slobodan
+            if (PrijavaRadnika.Radnici.Count > 0)
+            {
+                int i = 0;
+
+                foreach (IRadnik radnik in PrijavaRadnika.Radnici.Values)
+                {
+                    if (i == poslednjiRadnik) return radnik.ObradaZahteva(zahtev);
+                    
+                    i++;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Trenutno nema slobodnih radnika!");
+            }
+
+            return rezultat;
+
+            // BILO NEKAD
+            /*
             NetTcpBinding binding = new NetTcpBinding();
             string adresa = "net.tcp://localhost:9997/Radnik";
 
@@ -25,11 +49,11 @@ namespace LoadBalancer
             ChannelFactory<IRadnik> kanal = new ChannelFactory<IRadnik>(binding, new EndpointAddress(adresa));
             IRadnik proksi = kanal.CreateChannel();
 
-            List<string> rezultat = proksi.ObradaZahteva(zahtev);
+            rezultat = proksi.ObradaZahteva(zahtev);
 
             Console.WriteLine("Zahtev je prosleđen radniku.");
             return rezultat;
+            */
         }
-
     }
 }

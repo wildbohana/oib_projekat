@@ -27,7 +27,6 @@ namespace Service
 
             Console.WriteLine("Korisnik koji je pokrenuo server: " + WindowsIdentity.GetCurrent().Name);
             Console.WriteLine("Tip autentifikacije: " + WindowsIdentity.GetCurrent().AuthenticationType);
-            Console.WriteLine("Korisnik pripada grupi: " + WindowsIdentity.GetCurrent().Groups);
             Console.WriteLine("ID korisnika: " + WindowsIdentity.GetCurrent().User);
 
             Console.WriteLine("Servis je pokrenut. Pritisnite bilo koji taster za gasenje.");

@@ -120,7 +120,6 @@ namespace Client
         // GetSecretKey ??
         #endregion
 
-
         #region IDISPOSABLE
         // IDisposable interfejs
         public void Dispose()

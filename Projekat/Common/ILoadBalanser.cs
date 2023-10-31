@@ -10,7 +10,6 @@ namespace Common
     [ServiceContract]
     public interface ILoadBalanser
     {
-        // Mock funkcija
         [OperationContract]
         List<string> DelegirajZahtev(List<string> zahtev);
     }
