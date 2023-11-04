@@ -1,11 +1,26 @@
-C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Worker\bin\Debug\Worker.exe.config
-C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Worker\bin\Debug\Worker.exe
-C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Worker\bin\Debug\Worker.pdb
-C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Worker\bin\Debug\Common.dll
-C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Worker\bin\Debug\Common.pdb
-C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Worker\obj\Debug\Worker.csproj.AssemblyReference.cache
-C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Worker\obj\Debug\Worker.csproj.SuggestedBindingRedirects.cache
-C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Worker\obj\Debug\Worker.csproj.CoreCompileInputs.cache
-C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Worker\obj\Debug\Worker.csproj.CopyComplete
-C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Worker\obj\Debug\Worker.exe
-C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Worker\obj\Debug\Worker.pdb
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Worker\bin\Debug\Worker.exe.config
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Worker\bin\Debug\Worker.exe
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Worker\bin\Debug\Worker.pdb
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Worker\bin\Debug\Common.dll
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Worker\bin\Debug\Manager.dll
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Worker\bin\Debug\Common.pdb
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Worker\bin\Debug\Manager.pdb
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Worker\obj\Debug\Worker.csproj.AssemblyReference.cache
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Worker\obj\Debug\Worker.csproj.SuggestedBindingRedirects.cache
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Worker\obj\Debug\Worker.csproj.CoreCompileInputs.cache
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Worker\obj\Debug\Worker.csproj.CopyComplete
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Worker\obj\Debug\Worker.exe
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Worker\obj\Debug\Worker.pdb
+C:\Users\Uros\Desktop\Projekat\Worker\bin\Debug\Worker.exe.config
+C:\Users\Uros\Desktop\Projekat\Worker\bin\Debug\Worker.exe
+C:\Users\Uros\Desktop\Projekat\Worker\bin\Debug\Worker.pdb
+C:\Users\Uros\Desktop\Projekat\Worker\bin\Debug\Common.dll
+C:\Users\Uros\Desktop\Projekat\Worker\bin\Debug\Manager.dll
+C:\Users\Uros\Desktop\Projekat\Worker\bin\Debug\Common.pdb
+C:\Users\Uros\Desktop\Projekat\Worker\bin\Debug\Manager.pdb
+C:\Users\Uros\Desktop\Projekat\Worker\obj\Debug\Worker.csproj.AssemblyReference.cache
+C:\Users\Uros\Desktop\Projekat\Worker\obj\Debug\Worker.csproj.SuggestedBindingRedirects.cache
+C:\Users\Uros\Desktop\Projekat\Worker\obj\Debug\Worker.csproj.CoreCompileInputs.cache
+C:\Users\Uros\Desktop\Projekat\Worker\obj\Debug\Worker.csproj.CopyComplete
+C:\Users\Uros\Desktop\Projekat\Worker\obj\Debug\Worker.exe
+C:\Users\Uros\Desktop\Projekat\Worker\obj\Debug\Worker.pdb

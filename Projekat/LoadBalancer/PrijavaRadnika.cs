@@ -6,6 +6,9 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using Manager;
+using System.Security.Principal;
+using System.Security.Cryptography.X509Certificates;
 
 namespace LoadBalancer
 {

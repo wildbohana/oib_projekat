@@ -3,9 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using Manager;
+using System.Security.Principal;
+using System.ServiceModel.Security;
 
 namespace Worker
 {
@@ -13,21 +17,22 @@ namespace Worker
     {
         static void Main(string[] args)
         {
+
+            string srvCertCN = "loadbalancer";
             // Osnovni port + broj aktivnih radnika = broj porta novog radnika
             int osnovniPort = 9900;
 
             // Server za prijavu radnika na sistem
             NetTcpBinding binding1 = new NetTcpBinding();
-            string adresa1 = "net.tcp://localhost:9997/PrijavaRadnika";
+            binding1.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
+
 
             // TODO - izmeni u sertifikate
-            binding1.Security.Mode = SecurityMode.Transport;
-            binding1.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
-            binding1.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
+            X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, srvCertCN);
+            EndpointAddress address = new EndpointAddress(new Uri("net.tcp://localhost:9997/PrijavaRadnika"),
+                                      new X509CertificateEndpointIdentity(srvCert));
 
-            //EndpointAddress epadresa = new EndpointAddress(new Uri(adresa1));
-            //ChannelFactory<IPrijavaRadnika> kanal = new ChannelFactory<IPrijavaRadnika>(binding1, epadresa);
-            ChannelFactory<IPrijavaRadnika> kanal = new ChannelFactory<IPrijavaRadnika>(binding1, adresa1);
+            ChannelFactory<IPrijavaRadnika> kanal = new ChannelFactory<IPrijavaRadnika>(binding1, address);
 
             // Radnik traži ID
             IPrijavaRadnika proksi = null;
@@ -35,6 +40,15 @@ namespace Worker
 
             try
             {
+                string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+                
+                kanal.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.ChainTrust;
+                kanal.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
+
+                /// Set appropriate client's certificate on the channel. Use CertManager class to obtain the certificate based on the "cltCertCN"
+                kanal.Credentials.ClientCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
+                
+                
                 proksi = kanal.CreateChannel();
                 id = proksi.DodeliID();
             }

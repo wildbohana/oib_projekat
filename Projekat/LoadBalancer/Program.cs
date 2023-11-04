@@ -2,9 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using Manager;
+using System.ServiceModel.Security;
+using System.Security.Cryptography.X509Certificates;
+
 
 namespace LoadBalancer
 {
@@ -27,16 +32,27 @@ namespace LoadBalancer
             #endregion
 
             #region SERVER ZA PRIJAVU RADNIKA
+
+            string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+
+
             NetTcpBinding binding2 = new NetTcpBinding();
+
+            binding2.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
+
             string adresa2 = "net.tcp://localhost:9997/PrijavaRadnika";
 
             // TODO - promeni na sertifikate
-            binding2.Security.Mode = SecurityMode.Transport;
-            binding2.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
-            binding2.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
+            
 
             ServiceHost host2 = new ServiceHost(typeof(PrijavaRadnika));
             host2.AddServiceEndpoint(typeof(IPrijavaRadnika), binding2, adresa2);
+
+
+            host2.Credentials.ClientCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.ChainTrust;
+            host2.Credentials.ClientCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
+            host2.Credentials.ServiceCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, srvCertCN);
+
 
             // Pokretanje hosta za Radnike
             try

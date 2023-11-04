@@ -113,12 +113,8 @@ namespace Client
                 int id = -1;
                 Console.Write("Unesi ID (8-cifara): ");
 
-                string input = Console.ReadLine();
-                
-
-                if (input.Length == 8 && Int32.TryParse(input, out id))
+                if (Int32.TryParse(Console.ReadLine(), out id))
                 {
-                    Console.WriteLine("ID: " + id);
                     Console.WriteLine(proksi.DobaviPotrosnju(id.ToString(), ime, prezime));
                     break;
                 }

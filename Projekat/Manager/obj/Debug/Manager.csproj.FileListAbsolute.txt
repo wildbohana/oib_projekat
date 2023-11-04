@@ -1,0 +1,6 @@
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Manager\bin\Debug\Manager.dll
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Manager\bin\Debug\Manager.pdb
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Manager\obj\Debug\Manager.csproj.AssemblyReference.cache
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Manager\obj\Debug\Manager.csproj.CoreCompileInputs.cache
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Manager\obj\Debug\Manager.dll
+C:\Users\Uros\Documents\GitHub\oib_projekat\Projekat\Manager\obj\Debug\Manager.pdb
