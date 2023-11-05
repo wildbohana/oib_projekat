@@ -36,24 +36,6 @@ namespace LoadBalancer
             }
 
             return rezultat;
-
-            // BILO NEKAD
-            /*
-            NetTcpBinding binding = new NetTcpBinding();
-            string adresa = "net.tcp://localhost:9997/Radnik";
-
-            binding.Security.Mode = SecurityMode.Transport;
-            binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
-            binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
-
-            ChannelFactory<IRadnik> kanal = new ChannelFactory<IRadnik>(binding, new EndpointAddress(adresa));
-            IRadnik proksi = kanal.CreateChannel();
-
-            rezultat = proksi.ObradaZahteva(zahtev);
-
-            Console.WriteLine("Zahtev je prosleđen radniku.");
-            return rezultat;
-            */
         }
     }
 }

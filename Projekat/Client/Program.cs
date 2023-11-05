@@ -113,7 +113,7 @@ namespace Client
                 int id = -1;
                 Console.Write("Unesi ID (8-cifara): ");
 
-                if (Int32.TryParse(Console.ReadLine(), out id))
+                if (Int32.TryParse(Console.ReadLine(), out id)&& returnDigit(id)==8)
                 {
                     Console.WriteLine(proksi.DobaviPotrosnju(id.ToString(), ime, prezime));
                     break;
@@ -123,6 +123,19 @@ namespace Client
                     Console.WriteLine("Neispravan unos");
                 }
             }
+
+            int returnDigit(Int32 numb)
+            {
+                int count = 0;
+                while (numb > 0)
+                {
+                    numb = numb / 10;
+                    count++;
+                }
+
+                return count;
+            }
+            
         }
 
         private static void ZahtevIzmenaID(IServer proksi)
