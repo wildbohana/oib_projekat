@@ -10,7 +10,6 @@ using Manager;
 using System.ServiceModel.Security;
 using System.Security.Cryptography.X509Certificates;
 
-
 namespace LoadBalancer
 {
     public class Program
@@ -32,38 +31,32 @@ namespace LoadBalancer
             #endregion
 
             #region SERVER ZA PRIJAVU RADNIKA
-
+            // Sertifikat za server
             string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
 
-
+            // Podešavanje binding-a
             NetTcpBinding binding2 = new NetTcpBinding();
-
             binding2.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
-
             string adresa2 = "net.tcp://localhost:9997/PrijavaRadnika";
-
-            // TODO - promeni na sertifikate
-            
 
             ServiceHost host2 = new ServiceHost(typeof(PrijavaRadnika));
             host2.AddServiceEndpoint(typeof(IPrijavaRadnika), binding2, adresa2);
 
-
+            // Podešavanje kredencijala (klijentskih i serverskih)
             host2.Credentials.ClientCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.ChainTrust;
             host2.Credentials.ClientCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
             host2.Credentials.ServiceCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, srvCertCN);
-
 
             // Pokretanje hosta za Radnike
             try
             {
                 host2.Open();
-                Console.WriteLine("LoadBalancer je pokrenut. Pritisni bilo koji taster za gašenje.");
+                Console.WriteLine("LoadBalancer je pokrenut. Pritisni bilo koji taster za gasenje.");
                 Console.ReadKey();
             }
             catch (Exception e)
             {
-                Console.WriteLine("[GREŠKA] " + e.Message);
+                Console.WriteLine("[GRESKA] " + e.Message);
                 Console.WriteLine("[StackTrace] " + e.StackTrace);
                 Console.WriteLine("Pritisni bilo koji taster za izlaz.");
                 Console.ReadKey();

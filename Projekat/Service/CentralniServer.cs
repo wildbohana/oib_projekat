@@ -17,18 +17,18 @@ namespace Service
         #region ISERVER
         public string DobaviPotrosnju(string id, string ime, string prezime)
         {
-            Console.WriteLine("[ZAHTEV] Dobavi potrosnju");
+            Console.WriteLine("\n[ZAHTEV] Dobavi potrosnju");
 
             // Autentifikacija
             IIdentity identity = Thread.CurrentPrincipal.Identity;
-            Console.WriteLine("Tip autentifikacije : " + identity.AuthenticationType);
+            Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
 
             WindowsIdentity windowsIdentity = identity as WindowsIdentity;
             Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
             // Prosleđivanje zahteva LB-u
             List<string> rezultat = ProslediZahtevLB(new List<string> { "DobaviPotrosnju", id, ime, prezime });
-            string odgovor = "";
+            string odgovor = "\n";
 
             foreach (string str in rezultat)
             {
@@ -40,18 +40,18 @@ namespace Service
 
         public string IzmeniPotrosnju(string id, string novaPotrosnja)
         {
-            Console.WriteLine("[ZAHTEV] Dodaj novo brojilo");
+            Console.WriteLine("\n[ZAHTEV] Dodaj novo brojilo");
 
             // Autentifikacija
             IIdentity identity = Thread.CurrentPrincipal.Identity;
-            Console.WriteLine("Tip autentifikacije : " + identity.AuthenticationType);
+            Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
 
             WindowsIdentity windowsIdentity = identity as WindowsIdentity;
             Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
             // Prosleđivanje zahteva LB-u
             List<string> rezultat = ProslediZahtevLB(new List<string> { "IzmeniPotrosnju", id, novaPotrosnja });
-            string odgovor = "";
+            string odgovor = "\n";
 
             foreach (string str in rezultat)
             {
@@ -63,18 +63,18 @@ namespace Service
 
         public string IzmeniID(string stariID, string noviID)
         {
-            Console.WriteLine("[ZAHTEV] Izmeni ID brojila");
+            Console.WriteLine("\n[ZAHTEV] Izmeni ID brojila");
 
             // Autentifikacija
             IIdentity identity = Thread.CurrentPrincipal.Identity;
-            Console.WriteLine("Tip autentifikacije : " + identity.AuthenticationType);
+            Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
 
             WindowsIdentity windowsIdentity = identity as WindowsIdentity;
             Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
             // Prosleđivanje zahteva LB-u
             List<string> rezultat = ProslediZahtevLB(new List<string> { "IzmeniID", stariID, noviID });
-            string odgovor = "";
+            string odgovor = "\n";
 
             foreach (string str in rezultat)
             {
@@ -86,18 +86,18 @@ namespace Service
 
         public string DodajBrojilo(string id, string ime, string prezime, string potrosnja)
         {
-            Console.WriteLine("[ZAHTEV] Dodaj novo brojilo");
+            Console.WriteLine("\n[ZAHTEV] Dodaj novo brojilo");
 
             // Autentifikacija
             IIdentity identity = Thread.CurrentPrincipal.Identity;
-            Console.WriteLine("Tip autentifikacije : " + identity.AuthenticationType);
+            Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
 
             WindowsIdentity windowsIdentity = identity as WindowsIdentity;
             Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
             // Prosleđivanje zahteva LB-u
             List<string> rezultat = ProslediZahtevLB(new List<string> { "DodajBrojilo", id, ime, prezime, potrosnja });
-            string odgovor = "";
+            string odgovor = "\n";
 
             foreach (string str in rezultat)
             {
@@ -109,18 +109,18 @@ namespace Service
 
         public string ObrisiBrojilo(string id)
         {
-            Console.WriteLine("[ZAHTEV] Obrisi brojilo");
+            Console.WriteLine("\n[ZAHTEV] Obrisi brojilo");
 
             // Autentifikacija
             IIdentity identity = Thread.CurrentPrincipal.Identity;
-            Console.WriteLine("Tip autentifikacije : " + identity.AuthenticationType);
+            Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
 
             WindowsIdentity windowsIdentity = identity as WindowsIdentity;
             Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
             // Prosleđivanje zahteva LB-u
             List<string> rezultat = ProslediZahtevLB(new List<string> { "ObrisiBrojilo", id });
-            string odgovor = "";
+            string odgovor = "\n";
 
             foreach (string str in rezultat)
             {
@@ -132,18 +132,18 @@ namespace Service
 
         public string ObrisiBazu()
         {
-            Console.WriteLine("[ZAHTEV] Obrisi bazu podataka");
+            Console.WriteLine("\n[ZAHTEV] Obrisi bazu podataka");
 
             // Autentifikacija
             IIdentity identity = Thread.CurrentPrincipal.Identity;
-            Console.WriteLine("Tip autentifikacije : " + identity.AuthenticationType);
+            Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
 
             WindowsIdentity windowsIdentity = identity as WindowsIdentity;
             Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
             // Prosleđivanje zahteva LB-u
             List<string> rezultat = ProslediZahtevLB(new List<string> { "ObrisiBazu" });
-            string odgovor = "";
+            string odgovor = "\n";
 
             foreach (string str in rezultat)
             {
@@ -155,18 +155,18 @@ namespace Service
 
         public string ArhivirajBazu()
         {
-            Console.WriteLine("[ZAHTEV] Arhiviraj bazu podataka");
+            Console.WriteLine("\n[ZAHTEV] Arhiviraj bazu podataka");
 
             // Autentifikacija
             IIdentity identity = Thread.CurrentPrincipal.Identity;
-            Console.WriteLine("Tip autentifikacije : " + identity.AuthenticationType);
+            Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
 
             WindowsIdentity windowsIdentity = identity as WindowsIdentity;
             Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
             // Prosleđivanje zahteva LB-u
             List<string> rezultat = ProslediZahtevLB(new List<string> { "ArhivirajBazu" });
-            string odgovor = "";
+            string odgovor = "\n";
 
             foreach (string str in rezultat)
             {
@@ -192,7 +192,7 @@ namespace Service
             ChannelFactory<ILoadBalanser> kanal = new ChannelFactory<ILoadBalanser>(binding, new EndpointAddress(adresa));
             ILoadBalanser proksi = kanal.CreateChannel();
 
-            Console.WriteLine("Zahtev je prosleđen balanseru opterećenja.");
+            Console.WriteLine("Zahtev je prosledjen balanseru opterecenja.");
             List<string> rezultat = proksi.DelegirajZahtev(zahtev);
 
             return rezultat;

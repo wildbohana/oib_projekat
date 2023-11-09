@@ -17,7 +17,7 @@ namespace Worker
     {
         static void Main(string[] args)
         {
-
+            // Sertifikat
             string srvCertCN = "loadbalancer";
             // Osnovni port + broj aktivnih radnika = broj porta novog radnika
             int osnovniPort = 9900;
@@ -26,13 +26,10 @@ namespace Worker
             NetTcpBinding binding1 = new NetTcpBinding();
             binding1.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
 
-
-            // TODO - izmeni u sertifikate
+            // Podešavanje kanala ka LB (sertifikati)
             X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, srvCertCN);
-            EndpointAddress address = new EndpointAddress(new Uri("net.tcp://localhost:9997/PrijavaRadnika"),
-                                      new X509CertificateEndpointIdentity(srvCert));
-
-            ChannelFactory<IPrijavaRadnika> kanal = new ChannelFactory<IPrijavaRadnika>(binding1, address);
+            EndpointAddress adresa1 = new EndpointAddress(new Uri("net.tcp://localhost:9997/PrijavaRadnika"), new X509CertificateEndpointIdentity(srvCert));
+            ChannelFactory<IPrijavaRadnika> kanal = new ChannelFactory<IPrijavaRadnika>(binding1, adresa1);
 
             // Radnik traži ID
             IPrijavaRadnika proksi = null;
@@ -45,22 +42,21 @@ namespace Worker
                 kanal.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.ChainTrust;
                 kanal.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
 
-                /// Set appropriate client's certificate on the channel. Use CertManager class to obtain the certificate based on the "cltCertCN"
+                // Podešavanje klijentskih sertifikata na kanalu
                 kanal.Credentials.ClientCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
-                
                 
                 proksi = kanal.CreateChannel();
                 id = proksi.DodeliID();
             }
             catch (Exception e)
             {
-                Console.WriteLine("[GREŠKA] " + e.Message);
+                Console.WriteLine("[GRESKA] " + e.Message);
                 Console.WriteLine("[StackTrace] " + e.StackTrace);
                 Console.WriteLine("Pritisni bilo koji taster za izlaz.");
                 Console.ReadKey();
             }
 
-            // Kada dobije ID, radnik otvara svoj host
+            // Kada dobije ID, radnik pokreće svoj host
             NetTcpBinding binding2 = new NetTcpBinding();
             int noviPort = osnovniPort + id;
             string adresa2 = "net.tcp://localhost:" + noviPort + "/Radnik";
@@ -75,7 +71,7 @@ namespace Worker
 
             // Nakon što otvori host, prijavljuje se na LB
             proksi.Prijava(id);
-            Console.WriteLine("Radnik je pokrenut. ID radnika je: " + id + ". Pritisni bilo koji taster za gašenje.");
+            Console.WriteLine("\nRadnik je pokrenut. ID radnika je: " + id + ". Pritisni bilo koji taster za gasenje.");
             Console.ReadKey();
 
             // Kada se ugasi, odjavljuje se sa LB

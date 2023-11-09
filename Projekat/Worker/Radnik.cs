@@ -30,7 +30,7 @@ namespace Worker
         public List<string> ObradaZahteva(List<string> zahtev)
         {
             Console.WriteLine("Radnik je primio zahtev!");
-            Console.WriteLine("Zahtev: " + zahtev[0]);
+            Console.WriteLine("Zahtev: " + zahtev[0] + "\n");
 
             if (zahtev[0] == "DobaviPotrosnju")
             {
@@ -125,7 +125,7 @@ namespace Worker
                 }
             }
 
-            return new List<string> { "Greška!", "Podaci za trazenog korisnika se ne nalaze u bazi." };
+            return new List<string> { "Greska!", "Podaci za trazenog korisnika se ne nalaze u bazi." };
         }
 
         // Dodavanje novog brojila u bazu podataka, posle dodavanja se vrši upis u fajl
@@ -278,7 +278,7 @@ namespace Worker
         // Folder u kom sa nalazi .sln
         static string direktorijumProjekta = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
         // Folder u kom se nalazi baza
-        static string direktorijumBaza = direktorijumProjekta.ToString() + "\\BazaPodataka\\";
+        static string direktorijumBaza = direktorijumProjekta + "\\BazaPodataka\\";
 
         // Sinhronizacija pristupa (slično kao mutex i lock)
         static EventWaitHandle kontrolaPristupa = new EventWaitHandle(true, EventResetMode.AutoReset, "SHARED_BY_ALL_PROCESSES");

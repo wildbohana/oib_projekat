@@ -45,8 +45,6 @@ namespace Manager
 		public static X509Certificate2 GetCertificateFromFile(string fileName)
 		{
 			X509Certificate2 certificate = null;
-
-
 			return certificate;
 		}
 
@@ -59,8 +57,6 @@ namespace Manager
 		public static X509Certificate2 GetCertificateFromFile(string fileName, SecureString pwd)
 		{
 			X509Certificate2 certificate = null;
-
-
 			return certificate;
 		}
 	}

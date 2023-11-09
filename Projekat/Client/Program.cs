@@ -25,9 +25,9 @@ namespace Client
                 Klijent proksi = new Klijent(binding, adresa);
 
                 // Autentifikacija
-                Console.WriteLine("Klijenta je pokrenuo korisnik: " + WindowsIdentity.GetCurrent().Name + "\n");
+                Console.WriteLine("Klijenta je pokrenuo korisnik: " + WindowsIdentity.GetCurrent().Name);
                 Console.WriteLine("Tip autentifikacije: " + WindowsIdentity.GetCurrent().AuthenticationType);
-                Console.WriteLine("ID korisnika: " + WindowsIdentity.GetCurrent().User);
+                Console.WriteLine("ID korisnika: " + WindowsIdentity.GetCurrent().User + "\n");
 
                 Meni(proksi);
 
@@ -49,13 +49,13 @@ namespace Client
                 Console.WriteLine("Izbor operacije: ");
                 Console.WriteLine("-----------------------");
                 Console.WriteLine("1. [SVI] Dobavi potrosnju struje.");
-                Console.WriteLine("2. [OPERATOR] Izmena ID brojila");
-                Console.WriteLine("3. [OPERATOR] Izmena potrosnje");
-                Console.WriteLine("4. [ADMIN] Dodaj novo brojilo");
-                Console.WriteLine("5. [ADMIN] Obrisi postojeve brojilo");
-                Console.WriteLine("6. [SUPER-ADMIN] Obrisi bazu podataka");
-                Console.WriteLine("7. [SUPER-ADMIN] Arhiviraj bazu podataka");
-                Console.WriteLine("8. Izlaz");
+                Console.WriteLine("2. [OPERATOR] Izmena ID brojila.");
+                Console.WriteLine("3. [OPERATOR] Izmena potrosnje.");
+                Console.WriteLine("4. [ADMIN] Dodaj novo brojilo.");
+                Console.WriteLine("5. [ADMIN] Obrisi postojece brojilo.");
+                Console.WriteLine("6. [SUPER-ADMIN] Obrisi bazu podataka.");
+                Console.WriteLine("7. [SUPER-ADMIN] Arhiviraj bazu podataka.");
+                Console.WriteLine("8. Izlaz.");
 
                 int i = 0;
                 if (!int.TryParse(Console.ReadLine(), out i))
@@ -100,6 +100,19 @@ namespace Client
         #endregion
 
         #region ZAHTEVI
+        // Pomoćna funkcija za prebrojavanje dužine unetog ID
+        private static int brojCifara(Int32 broj)
+        {
+            int brojac = 0;
+            while (broj > 0)
+            {
+                broj = broj / 10;
+                brojac++;
+            }
+
+            return brojac;
+        }
+
         private static void ZahtevPotrosnja(IServer proksi)
         {
             Console.Write("Unesi ime: ");
@@ -109,33 +122,19 @@ namespace Client
 
             while (true)
             {
-                // TODO provera da li ima 8 ili više cifara ???
                 int id = -1;
                 Console.Write("Unesi ID (8-cifara): ");
 
-                if (Int32.TryParse(Console.ReadLine(), out id)&& returnDigit(id)==8)
+                if (Int32.TryParse(Console.ReadLine(), out id) && brojCifara(id) == 8)
                 {
                     Console.WriteLine(proksi.DobaviPotrosnju(id.ToString(), ime, prezime));
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Neispravan unos");
+                    Console.WriteLine("Neispravan unos!");
                 }
             }
-
-            int returnDigit(Int32 numb)
-            {
-                int count = 0;
-                while (numb > 0)
-                {
-                    numb = numb / 10;
-                    count++;
-                }
-
-                return count;
-            }
-            
         }
 
         private static void ZahtevIzmenaID(IServer proksi)
@@ -143,7 +142,7 @@ namespace Client
             Console.Write("Unesi stari ID: ");
             int stariID = 0;
 
-            if (Int32.TryParse(Console.ReadLine(), out stariID))
+            if (Int32.TryParse(Console.ReadLine(), out stariID) && brojCifara(stariID) == 8)
             {
                 Console.Write("Unesi novi ID: ");
                 int noviID = 0;
@@ -169,7 +168,7 @@ namespace Client
             int id = -1;
             double novaPotrosnja;
 
-            if (Int32.TryParse(Console.ReadLine(), out id))
+            if (Int32.TryParse(Console.ReadLine(), out id) && brojCifara(id) == 8)
             {
                 Console.Write("Unesi vrednost za novu potrosnju: ");
                 if (double.TryParse(Console.ReadLine(), out novaPotrosnja))
@@ -196,7 +195,7 @@ namespace Client
             string prezime;
             int potrosnja;
 
-            if (Int32.TryParse(Console.ReadLine(), out id))
+            if (Int32.TryParse(Console.ReadLine(), out id) && brojCifara(id) == 8)
             {
                 Console.Write("Unesi potrosnju: ");
                 if (Int32.TryParse(Console.ReadLine(), out potrosnja))
@@ -224,7 +223,7 @@ namespace Client
             Console.Write("Unesi ID brojila za brisanje: ");
             int id;
 
-            if (Int32.TryParse(Console.ReadLine(), out id))
+            if (Int32.TryParse(Console.ReadLine(), out id) && brojCifara(id) == 8)
             {
                 Console.WriteLine(proksi.ObrisiBrojilo(id.ToString()));
             }

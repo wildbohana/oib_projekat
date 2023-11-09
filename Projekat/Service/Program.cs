@@ -29,7 +29,7 @@ namespace Service
             Console.WriteLine("Tip autentifikacije: " + WindowsIdentity.GetCurrent().AuthenticationType);
             Console.WriteLine("ID korisnika: " + WindowsIdentity.GetCurrent().User);
 
-            Console.WriteLine("Servis je pokrenut. Pritisnite bilo koji taster za gasenje.");
+            Console.WriteLine("\nServis je pokrenut. Pritisnite bilo koji taster za gasenje.");
             Console.ReadLine();
             host.Close();
         }
