@@ -35,10 +35,11 @@ namespace SecurityManager
 
                 if (RolesConfig.GetPermissions(groupName, out permissions))
                 {
-                    if (permissions.Contains(permission))
+                    if (!permissions.Contains(permission))
                     {
-                        return true;
+                        continue;
                     }
+                    return true;
                 }
             }
             return false;

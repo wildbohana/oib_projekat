@@ -1,9 +1,12 @@
 ﻿using Common;
+using SecurityManager;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Policy;
 using System.Linq;
 using System.Security.Principal;
 using System.ServiceModel;
+using System.ServiceModel.Description;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,9 +23,19 @@ namespace Service
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
             binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
 
-            // Ostvara se host
+            // Podešavanje hosta
             ServiceHost host = new ServiceHost(typeof(CentralniServer));
             host.AddServiceEndpoint(typeof(IServer), binding, adresa);
+
+            // Dodavanje custom sigurnosne polise
+            host.Authorization.PrincipalPermissionMode = PrincipalPermissionMode.Custom;
+            List<IAuthorizationPolicy> policies = new List<IAuthorizationPolicy>
+            {
+                new CustomAuthorizationPolicy()
+            };
+            host.Authorization.ExternalAuthorizationPolicies = policies.AsReadOnly();
+
+            // Otvara se host
             host.Open();
 
             Console.WriteLine("Korisnik koji je pokrenuo server: " + WindowsIdentity.GetCurrent().Name);

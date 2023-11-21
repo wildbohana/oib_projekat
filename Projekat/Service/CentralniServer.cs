@@ -1,8 +1,10 @@
 ﻿using Common;
+using SecurityManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Security.Permissions;
 using System.Security.Principal;
 using System.ServiceModel;
 using System.Text;
@@ -38,142 +40,208 @@ namespace Service
             return odgovor;
         }
 
+        //[PrincipalPermission(SecurityAction.Demand, Role = "Operator")]
         public string IzmeniPotrosnju(string id, string novaPotrosnja)
         {
-            Console.WriteLine("\n[ZAHTEV] Dodaj novo brojilo");
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
+            string userName = Formatter.ParseName(principal.Identity.Name);
 
-            // Autentifikacija
-            IIdentity identity = Thread.CurrentPrincipal.Identity;
-            Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
-
-            WindowsIdentity windowsIdentity = identity as WindowsIdentity;
-            Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
-
-            // Prosleđivanje zahteva LB-u
-            List<string> rezultat = ProslediZahtevLB(new List<string> { "IzmeniPotrosnju", id, novaPotrosnja });
-            string odgovor = "\n";
-
-            foreach (string str in rezultat)
+            if (Thread.CurrentPrincipal.IsInRole("Modifikuj"))
             {
-                odgovor = odgovor + '\t' + str;
-            }
+                Console.WriteLine("\n[ZAHTEV] Dodaj novo brojilo");
 
-            return odgovor;
+                // Autentifikacija
+                IIdentity identity = Thread.CurrentPrincipal.Identity;
+                Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
+
+                WindowsIdentity windowsIdentity = identity as WindowsIdentity;
+                Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
+
+                // Prosleđivanje zahteva LB-u
+                List<string> rezultat = ProslediZahtevLB(new List<string> { "IzmeniPotrosnju", id, novaPotrosnja });
+                string odgovor = "\n";
+
+                foreach (string str in rezultat)
+                {
+                    odgovor = odgovor + '\t' + str;
+                }
+
+                return odgovor;
+            }
+            else
+            {
+                return "\tNevalidne permisije za korisnika!";
+            }
         }
 
+        //[PrincipalPermission(SecurityAction.Demand, Role = "Operator")]
         public string IzmeniID(string stariID, string noviID)
         {
-            Console.WriteLine("\n[ZAHTEV] Izmeni ID brojila");
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
+            string userName = Formatter.ParseName(principal.Identity.Name);
 
-            // Autentifikacija
-            IIdentity identity = Thread.CurrentPrincipal.Identity;
-            Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
-
-            WindowsIdentity windowsIdentity = identity as WindowsIdentity;
-            Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
-
-            // Prosleđivanje zahteva LB-u
-            List<string> rezultat = ProslediZahtevLB(new List<string> { "IzmeniID", stariID, noviID });
-            string odgovor = "\n";
-
-            foreach (string str in rezultat)
+            if (Thread.CurrentPrincipal.IsInRole("Modifikuj"))
             {
-                odgovor = odgovor + '\t' + str;
-            }
+                Console.WriteLine("\n[ZAHTEV] Izmeni ID brojila");
 
-            return odgovor;
+                // Autentifikacija
+                IIdentity identity = Thread.CurrentPrincipal.Identity;
+                Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
+
+                WindowsIdentity windowsIdentity = identity as WindowsIdentity;
+                Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
+
+                // Prosleđivanje zahteva LB-u
+                List<string> rezultat = ProslediZahtevLB(new List<string> { "IzmeniID", stariID, noviID });
+                string odgovor = "\n";
+
+                foreach (string str in rezultat)
+                {
+                    odgovor = odgovor + '\t' + str;
+                }
+
+                return odgovor;
+            }
+            else
+            {
+                return "\tNevalidne permisije za korisnika!";
+            }
         }
 
+        //[PrincipalPermission(SecurityAction.Demand, Role = "Administrator")]
         public string DodajBrojilo(string id, string ime, string prezime, string potrosnja)
         {
-            Console.WriteLine("\n[ZAHTEV] Dodaj novo brojilo");
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
+            string userName = Formatter.ParseName(principal.Identity.Name);
 
-            // Autentifikacija
-            IIdentity identity = Thread.CurrentPrincipal.Identity;
-            Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
-
-            WindowsIdentity windowsIdentity = identity as WindowsIdentity;
-            Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
-
-            // Prosleđivanje zahteva LB-u
-            List<string> rezultat = ProslediZahtevLB(new List<string> { "DodajBrojilo", id, ime, prezime, potrosnja });
-            string odgovor = "\n";
-
-            foreach (string str in rezultat)
+            if (Thread.CurrentPrincipal.IsInRole("DodajEntitet"))
             {
-                odgovor = odgovor + '\t' + str;
-            }
+                Console.WriteLine("\n[ZAHTEV] Dodaj novo brojilo");
 
-            return odgovor;
+                // Autentifikacija
+                IIdentity identity = Thread.CurrentPrincipal.Identity;
+                Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
+
+                WindowsIdentity windowsIdentity = identity as WindowsIdentity;
+                Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
+
+                // Prosleđivanje zahteva LB-u
+                List<string> rezultat = ProslediZahtevLB(new List<string> { "DodajBrojilo", id, ime, prezime, potrosnja });
+                string odgovor = "\n";
+
+                foreach (string str in rezultat)
+                {
+                    odgovor = odgovor + '\t' + str;
+                }
+
+                return odgovor;
+            }
+            else
+            {
+                return "\tNevalidne permisije za korisnika!";
+            }
         }
 
+        //[PrincipalPermission(SecurityAction.Demand, Role = "Administrator")]
         public string ObrisiBrojilo(string id)
         {
-            Console.WriteLine("\n[ZAHTEV] Obrisi brojilo");
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
+            string userName = Formatter.ParseName(principal.Identity.Name);
 
-            // Autentifikacija
-            IIdentity identity = Thread.CurrentPrincipal.Identity;
-            Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
-
-            WindowsIdentity windowsIdentity = identity as WindowsIdentity;
-            Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
-
-            // Prosleđivanje zahteva LB-u
-            List<string> rezultat = ProslediZahtevLB(new List<string> { "ObrisiBrojilo", id });
-            string odgovor = "\n";
-
-            foreach (string str in rezultat)
+            if (Thread.CurrentPrincipal.IsInRole("ObrisiEntitet"))
             {
-                odgovor = odgovor + '\t' + str;
-            }
+                Console.WriteLine("\n[ZAHTEV] Obrisi brojilo");
 
-            return odgovor;
+                // Autentifikacija
+                IIdentity identity = Thread.CurrentPrincipal.Identity;
+                Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
+
+                WindowsIdentity windowsIdentity = identity as WindowsIdentity;
+                Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
+
+                // Prosleđivanje zahteva LB-u
+                List<string> rezultat = ProslediZahtevLB(new List<string> { "ObrisiBrojilo", id });
+                string odgovor = "\n";
+
+                foreach (string str in rezultat)
+                {
+                    odgovor = odgovor + '\t' + str;
+                }
+
+                return odgovor;
+            }
+            else
+            {
+                return "\tNevalidne permisije za korisnika!";
+            }
         }
 
+        //[PrincipalPermission(SecurityAction.Demand, Role = "SuperAdministrator")]
         public string ObrisiBazu()
         {
-            Console.WriteLine("\n[ZAHTEV] Obrisi bazu podataka");
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
+            string userName = Formatter.ParseName(principal.Identity.Name);
 
-            // Autentifikacija
-            IIdentity identity = Thread.CurrentPrincipal.Identity;
-            Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
-
-            WindowsIdentity windowsIdentity = identity as WindowsIdentity;
-            Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
-
-            // Prosleđivanje zahteva LB-u
-            List<string> rezultat = ProslediZahtevLB(new List<string> { "ObrisiBazu" });
-            string odgovor = "\n";
-
-            foreach (string str in rezultat)
+            if (Thread.CurrentPrincipal.IsInRole("ObrisiBazu"))
             {
-                odgovor = odgovor + '\t' + str;
-            }
+                Console.WriteLine("\n[ZAHTEV] Obrisi bazu podataka");
 
-            return odgovor;
+                // Autentifikacija
+                IIdentity identity = Thread.CurrentPrincipal.Identity;
+                Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
+
+                WindowsIdentity windowsIdentity = identity as WindowsIdentity;
+                Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
+
+                // Prosleđivanje zahteva LB-u
+                List<string> rezultat = ProslediZahtevLB(new List<string> { "ObrisiBazu" });
+                string odgovor = "\n";
+
+                foreach (string str in rezultat)
+                {
+                    odgovor = odgovor + '\t' + str;
+                }
+
+                return odgovor;
+            }
+            else
+            {
+                return "\tNevalidne permisije za korisnika!";
+            }
         }
 
+        //[PrincipalPermission(SecurityAction.Demand, Role = "SuperAdministrator")]
         public string ArhivirajBazu()
         {
-            Console.WriteLine("\n[ZAHTEV] Arhiviraj bazu podataka");
+            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
+            string userName = Formatter.ParseName(principal.Identity.Name);
 
-            // Autentifikacija
-            IIdentity identity = Thread.CurrentPrincipal.Identity;
-            Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
-
-            WindowsIdentity windowsIdentity = identity as WindowsIdentity;
-            Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
-
-            // Prosleđivanje zahteva LB-u
-            List<string> rezultat = ProslediZahtevLB(new List<string> { "ArhivirajBazu" });
-            string odgovor = "\n";
-
-            foreach (string str in rezultat)
+            if (Thread.CurrentPrincipal.IsInRole("ArhivirajBazu"))
             {
-                odgovor = odgovor + '\t' + str;
-            }
+                Console.WriteLine("\n[ZAHTEV] Arhiviraj bazu podataka");
 
-            return odgovor;
+                // Autentifikacija
+                IIdentity identity = Thread.CurrentPrincipal.Identity;
+                Console.WriteLine("Tip autentifikacije: " + identity.AuthenticationType);
+
+                WindowsIdentity windowsIdentity = identity as WindowsIdentity;
+                Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
+
+                // Prosleđivanje zahteva LB-u
+                List<string> rezultat = ProslediZahtevLB(new List<string> { "ArhivirajBazu" });
+                string odgovor = "\n";
+
+                foreach (string str in rezultat)
+                {
+                    odgovor = odgovor + '\t' + str;
+                }
+
+                return odgovor;
+            }
+            else
+            {
+                return "\tNevalidne permisije za korisnika!";
+            }
         }
         #endregion
 

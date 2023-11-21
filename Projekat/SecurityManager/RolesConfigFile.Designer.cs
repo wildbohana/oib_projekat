@@ -63,27 +63,27 @@ namespace SecurityManager {
         /// <summary>
         ///   Looks up a localized string similar to ObrisiEntitet,DodajEntitet.
         /// </summary>
-        internal static string Administrator {
+        internal static string Administratori {
             get {
-                return ResourceManager.GetString("Administrator", resourceCulture);
+                return ResourceManager.GetString("Administratori", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Modifikuj.
         /// </summary>
-        internal static string Operator {
+        internal static string Operatori {
             get {
-                return ResourceManager.GetString("Operator", resourceCulture);
+                return ResourceManager.GetString("Operatori", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to ObrisiBazu,ArhivirajBazu.
         /// </summary>
-        internal static string SuperAdministrator {
+        internal static string SuperAdministratori {
             get {
-                return ResourceManager.GetString("SuperAdministrator", resourceCulture);
+                return ResourceManager.GetString("SuperAdministratori", resourceCulture);
             }
         }
     }

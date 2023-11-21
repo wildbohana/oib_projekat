@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Administrator" xml:space="preserve">
+  <data name="Administratori" xml:space="preserve">
     <value>ObrisiEntitet,DodajEntitet</value>
   </data>
-  <data name="Operator" xml:space="preserve">
+  <data name="Operatori" xml:space="preserve">
     <value>Modifikuj</value>
   </data>
-  <data name="SuperAdministrator" xml:space="preserve">
+  <data name="SuperAdministratori" xml:space="preserve">
     <value>ObrisiBazu,ArhivirajBazu</value>
   </data>
 </root>
