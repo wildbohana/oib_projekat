@@ -15,18 +15,20 @@ namespace LoadBalancer
         // Prosleđivanje zahteva ka nekom od Radnika
         public List<string> DelegirajZahtev(List<string> zahtev)
         {
-            poslednjiRadnik = (poslednjiRadnik + 1) % (PrijavaRadnika.Radnici.Count);
             List<string> rezultat = new List<string>();
+            if (PrijavaRadnika.Radnici.Count > 0)
+                poslednjiRadnik = (poslednjiRadnik + 1) % (PrijavaRadnika.Radnici.Count);
+            else
+                poslednjiRadnik = -1;
 
             // Ako postoje radnici, proveri da li je neki od njih slobodan
             if (PrijavaRadnika.Radnici.Count > 0)
             {
                 int i = 0;
-
                 foreach (IRadnik radnik in PrijavaRadnika.Radnici.Values)
                 {
-                    if (i == poslednjiRadnik) return radnik.ObradaZahteva(zahtev);
-                    
+                    if (i == poslednjiRadnik) 
+                        return radnik.ObradaZahteva(zahtev);          
                     i++;
                 }
             }

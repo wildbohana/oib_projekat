@@ -17,6 +17,7 @@ namespace Worker
     {
         static void Main(string[] args)
         {
+            #region PRIJAVA RADNIKA NA LB
             // Sertifikat
             string srvCertCN = "loadbalancer";
             // Osnovni port + broj aktivnih radnika = broj porta novog radnika
@@ -55,7 +56,9 @@ namespace Worker
                 Console.WriteLine("Pritisni bilo koji taster za izlaz.");
                 Console.ReadKey();
             }
+            #endregion
 
+            #region POKRETANJE RADNIKA
             // Kada dobije ID, radnik pokreće svoj host
             NetTcpBinding binding2 = new NetTcpBinding();
             int noviPort = osnovniPort + id;
@@ -77,6 +80,7 @@ namespace Worker
             // Kada se ugasi, odjavljuje se sa LB
             proksi.Odjava(id);
             host.Close();
+            #endregion
         }
     }
 }
