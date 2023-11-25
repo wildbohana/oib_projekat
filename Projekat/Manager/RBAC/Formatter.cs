@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SecurityManager
+namespace Manager
 {
-    public class Formatter
+    public class RbacFormatter
     {
         public static string ParseName(string winLogonName)
         {

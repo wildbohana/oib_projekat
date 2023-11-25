@@ -6,12 +6,12 @@ using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SecurityManager
+namespace Manager
 {
     public class RolesConfig
     {
         static string projectPath = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-        static string path = projectPath + "\\SecurityManager\\RolesConfigFile.resx";
+        static string path = projectPath + "\\Manager\\RBAC\\RolesConfigFile.resx";
 
         #region PERMISIJE
         // Dobavljanje permisija za ulogu iz fajla

@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadBalancer", "LoadBalance
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manager", "Manager\Manager.csproj", "{C0B2576A-137D-48CB-BE90-C1E7610AA110}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityManager", "SecurityManager\SecurityManager.csproj", "{E5312C77-ABBF-4C03-B4CF-B390E71AEC88}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{C0B2576A-137D-48CB-BE90-C1E7610AA110}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0B2576A-137D-48CB-BE90-C1E7610AA110}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0B2576A-137D-48CB-BE90-C1E7610AA110}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E5312C77-ABBF-4C03-B4CF-B390E71AEC88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5312C77-ABBF-4C03-B4CF-B390E71AEC88}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5312C77-ABBF-4C03-B4CF-B390E71AEC88}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5312C77-ABBF-4C03-B4CF-B390E71AEC88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

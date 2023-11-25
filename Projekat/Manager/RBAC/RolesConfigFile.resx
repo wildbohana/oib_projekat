@@ -120,7 +120,7 @@
   <data name="Administratori" xml:space="preserve">
     <value>ObrisiEntitet,DodajEntitet</value>
   </data>
-  <data name="Operatori" xml:space="preserve">
+  <data name="Operateri" xml:space="preserve">
     <value>Modifikuj</value>
   </data>
   <data name="SuperAdministratori" xml:space="preserve">

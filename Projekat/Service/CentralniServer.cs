@@ -1,5 +1,5 @@
 ﻿using Common;
-using SecurityManager;
+using Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +44,7 @@ namespace Service
         public string IzmeniPotrosnju(string id, string novaPotrosnja)
         {
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
-            string userName = Formatter.ParseName(principal.Identity.Name);
+            string userName = RbacFormatter.ParseName(principal.Identity.Name);
 
             if (Thread.CurrentPrincipal.IsInRole("Modifikuj"))
             {
@@ -78,7 +78,7 @@ namespace Service
         public string IzmeniID(string stariID, string noviID)
         {
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
-            string userName = Formatter.ParseName(principal.Identity.Name);
+            string userName = RbacFormatter.ParseName(principal.Identity.Name);
 
             if (Thread.CurrentPrincipal.IsInRole("Modifikuj"))
             {
@@ -112,7 +112,7 @@ namespace Service
         public string DodajBrojilo(string id, string ime, string prezime, string potrosnja)
         {
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
-            string userName = Formatter.ParseName(principal.Identity.Name);
+            string userName = RbacFormatter.ParseName(principal.Identity.Name);
 
             if (Thread.CurrentPrincipal.IsInRole("DodajEntitet"))
             {
@@ -146,7 +146,7 @@ namespace Service
         public string ObrisiBrojilo(string id)
         {
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
-            string userName = Formatter.ParseName(principal.Identity.Name);
+            string userName = RbacFormatter.ParseName(principal.Identity.Name);
 
             if (Thread.CurrentPrincipal.IsInRole("ObrisiEntitet"))
             {
@@ -180,7 +180,7 @@ namespace Service
         public string ObrisiBazu()
         {
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
-            string userName = Formatter.ParseName(principal.Identity.Name);
+            string userName = RbacFormatter.ParseName(principal.Identity.Name);
 
             if (Thread.CurrentPrincipal.IsInRole("ObrisiBazu"))
             {
@@ -214,7 +214,7 @@ namespace Service
         public string ArhivirajBazu()
         {
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
-            string userName = Formatter.ParseName(principal.Identity.Name);
+            string userName = RbacFormatter.ParseName(principal.Identity.Name);
 
             if (Thread.CurrentPrincipal.IsInRole("ArhivirajBazu"))
             {

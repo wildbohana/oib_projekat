@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SecurityManager {
+namespace Manager {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace SecurityManager {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SecurityManager.RolesConfigFile", typeof(RolesConfigFile).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Manager.RBAC.RolesConfigFile", typeof(RolesConfigFile).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -72,9 +72,9 @@ namespace SecurityManager {
         /// <summary>
         ///   Looks up a localized string similar to Modifikuj.
         /// </summary>
-        internal static string Operatori {
+        internal static string Operateri {
             get {
-                return ResourceManager.GetString("Operatori", resourceCulture);
+                return ResourceManager.GetString("Operateri", resourceCulture);
             }
         }
         
