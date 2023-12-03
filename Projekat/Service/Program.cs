@@ -16,6 +16,11 @@ namespace Service
     {
         static void Main(string[] args)
         {
+            string keyFile = "SecretKey.txt";
+            string eSecretKeyAes = SecretKey.sKey;
+            string folderNameAES = "AES/";
+            SecretKey.StoreKey(eSecretKeyAes, folderNameAES + keyFile);
+
             NetTcpBinding binding = new NetTcpBinding();
             string adresa = "net.tcp://localhost:9999/CentralniServer";
 
@@ -34,6 +39,8 @@ namespace Service
                 new CustomAuthorizationPolicy()
             };
             host.Authorization.ExternalAuthorizationPolicies = policies.AsReadOnly();
+
+            SecretKey.GenerateKey();
 
             // Otvara se host
             host.Open();

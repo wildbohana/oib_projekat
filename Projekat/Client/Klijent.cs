@@ -1,7 +1,10 @@
 ﻿using Common;
+using Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Principal;
 using System.ServiceModel;
 using System.ServiceModel.Security;
 using System.Text;
@@ -18,19 +21,41 @@ namespace Client
         public Klijent(NetTcpBinding binding, EndpointAddress address) : base(binding, address)
         {
             kanal = this.CreateChannel();
+
+
+
         }
 
         public Klijent(NetTcpBinding binding, string address) : base(binding, address)
         {
             kanal = this.CreateChannel();
+
+            string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+
+            this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.Custom;
+            this.Credentials.ServiceCertificate.Authentication.CustomCertificateValidator = new ClientCertValidator();
+            this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
+
+            /// Set appropriate client's certificate on the channel. Use CertManager class to obtain the certificate based on the "cltCertCN"
+            this.Credentials.ClientCertificate.Certificate =
+                CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
+
         }
 
         #region ZAHTEVI
         public string DobaviPotrosnju(string id, string ime, string prezime)
         {
+            string idEnc = string.Empty;
+            string imeEnc = string.Empty;
+            string prezimeEnc = string.Empty;
+
+            AES.DecryptFile(id, idEnc, SecretKey.sKey);
+            AES.DecryptFile(ime, imeEnc, SecretKey.sKey);
+            AES.DecryptFile(prezime, prezimeEnc, SecretKey.sKey);
+
             try
             {
-                return kanal.DobaviPotrosnju(id, ime, prezime);
+                return kanal.DobaviPotrosnju(idEnc, imeEnc, prezimeEnc);
             }
             catch (Exception e)
             {
@@ -41,9 +66,16 @@ namespace Client
 
         public string IzmeniPotrosnju(string id, string novaPotrosnja)
         {
+            string idEnc = string.Empty;
+            string novaPotrosnjaEnc = string.Empty;
+
+            AES.DecryptFile(id, idEnc, SecretKey.sKey);
+            AES.DecryptFile(novaPotrosnja, novaPotrosnjaEnc, SecretKey.sKey);
+
+
             try
             {
-                return kanal.IzmeniPotrosnju(id, novaPotrosnja);
+                return kanal.IzmeniPotrosnju(idEnc, novaPotrosnjaEnc);
             }
             catch (Exception e)
             {
@@ -54,9 +86,14 @@ namespace Client
 
         public string IzmeniID(string stariID, string noviID)
         {
+            string stariIDEnc = string.Empty;
+            string noviIDEnc = string.Empty;
+
+            AES.DecryptFile(stariID, stariIDEnc, SecretKey.sKey);
+            AES.DecryptFile(noviID, noviIDEnc, SecretKey.sKey);
             try
             {
-                return kanal.IzmeniID(stariID, noviID);
+                return kanal.IzmeniID(stariIDEnc, noviIDEnc);
             }
             catch (Exception e)
             {
@@ -67,9 +104,20 @@ namespace Client
 
         public string DodajBrojilo(string id, string ime, string prezime, string potrosnja)
         {
+            string idEnc = string.Empty;
+            string imeEnc = string.Empty;
+            string prezimeEnc = string.Empty;
+            string potrosnjaEnc = string.Empty;
+
+            AES.DecryptFile(id, idEnc, SecretKey.sKey);
+            AES.DecryptFile(ime, imeEnc, SecretKey.sKey);
+            AES.DecryptFile(prezime, prezimeEnc, SecretKey.sKey);
+            AES.DecryptFile(potrosnja, potrosnjaEnc, SecretKey.sKey);
+
+
             try
             {
-                return kanal.DodajBrojilo(id, ime, prezime, potrosnja);
+                return kanal.DodajBrojilo(idEnc, imeEnc, prezimeEnc, potrosnjaEnc);
             }
             catch (Exception e)
             {
@@ -80,9 +128,14 @@ namespace Client
 
         public string ObrisiBrojilo(string id)
         {
+
+            string idEnc = string.Empty;
+
+            AES.DecryptFile(id, idEnc, SecretKey.sKey);
+
             try
             {
-                return kanal.ObrisiBrojilo(id);
+                return kanal.ObrisiBrojilo(idEnc);
             }
             catch (Exception e)
             {
