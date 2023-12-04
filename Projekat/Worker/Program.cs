@@ -48,6 +48,9 @@ namespace Worker
                 
                 proksi = kanal.CreateChannel();
                 id = proksi.DodeliID();
+
+                Console.WriteLine("Radnik je prijavljen na LoadBalancer sa ID: " + id);
+
             }
             catch (Exception e)
             {
@@ -74,7 +77,7 @@ namespace Worker
 
             // Nakon što otvori host, prijavljuje se na LB
             proksi.Prijava(id);
-            Console.WriteLine("\nRadnik je pokrenut. ID radnika je: " + id + ". Pritisni bilo koji taster za gasenje.");
+            Console.WriteLine("Radnik je pokrenut. Pritisni bilo koji taster za gasenje.");
             Console.ReadKey();
 
             // Kada se ugasi, odjavljuje se sa LB

@@ -22,13 +22,13 @@ namespace Manager
 
             AesCryptoServiceProvider aesCryptoProvider = new AesCryptoServiceProvider
             {
-                Key = ASCIIEncoding.ASCII.GetBytes(secretKey),
+                KeySize = 128,
                 Mode = CipherMode.ECB,
-                Padding = PaddingMode.PKCS7
+                //Padding = PaddingMode.PKCS7
+                Padding = PaddingMode.Zeros
             };
-            //ICryptoTransform aesEncryptTransform = aesCryptoProvider.CreateEncryptor(key, null);
-            ICryptoTransform aesEncryptTransform = aesCryptoProvider.CreateEncryptor();
-
+            ICryptoTransform aesEncryptTransform = aesCryptoProvider.CreateEncryptor(key, null);
+            
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 using (CryptoStream cryptoStream = new CryptoStream(memoryStream, aesEncryptTransform, CryptoStreamMode.Write))
@@ -53,11 +53,12 @@ namespace Manager
 
             AesCryptoServiceProvider aesCryptoProvider = new AesCryptoServiceProvider
             {
-                Key = ASCIIEncoding.ASCII.GetBytes(secretKey),
+                KeySize = 128,
                 Mode = CipherMode.ECB,
-                Padding = PaddingMode.PKCS7
+                //Padding = PaddingMode.PKCS7
+                Padding = PaddingMode.Zeros
             };
-            ICryptoTransform aesDecryptTransform = aesCryptoProvider.CreateDecryptor();
+            ICryptoTransform aesDecryptTransform = aesCryptoProvider.CreateDecryptor(key, null);
 
             using (MemoryStream memoryStream = new MemoryStream(message))
             {

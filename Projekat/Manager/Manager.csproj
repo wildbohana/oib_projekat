@@ -45,11 +45,7 @@
   <ItemGroup>
     <Compile Include="Certificates\CertManager.cs" />
     <Compile Include="Certificates\Formatter.cs" />
-    <Compile Include="DigitalSignature\ClientCertValidator.cs" />
-    <Compile Include="DigitalSignature\DigitalSignature.cs" />
-    <Compile Include="DigitalSignature\ServiceCertValidator.cs" />
     <Compile Include="Encription\AES.cs" />
-    <Compile Include="Encription\Formatter.cs" />
     <Compile Include="Encription\SecretKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RBAC\CustomAuthorizationPolicy.cs" />

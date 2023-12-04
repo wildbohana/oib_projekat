@@ -2,6 +2,7 @@
 using Manager;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -18,53 +19,22 @@ namespace Service
 {
     public class CentralniServer : IServer
     {
-
-        public string GetSecretKey()
+        // Pomoćna funkcija
+        private string DobaviSKey(WindowsIdentity wi)
         {
-            return SecretKey.sKey;
+            string fullname = wi.Name.ToString();
+            string kime = fullname.Split('\\')[1];
+
+            string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Manager\\SecretKeys\\";
+            string keyFile = kime + ".txt";
+
+            string sKey = SecretKey.GetKey(path, keyFile);
+            return sKey;
         }
 
         #region ISERVER
         public string DobaviPotrosnju(string id, string ime, string prezime)
         {
-            // TODO izmeni interfejse, dodaj secret keyy kao argument
-            
-
-            string idDec = null;
-            string imeDec = null ;
-            string prezimeDec = null;
-
-            try
-            {
-                AES.DecryptFile(id, idDec, SecretKey.sKey);
-                Console.WriteLine("The file on location {0} is successfully decrypted.", id);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Decryption failed. Reason: {0}", e.Message);
-            }
-
-            try
-            {
-                AES.DecryptFile(ime, imeDec, SecretKey.sKey);
-                Console.WriteLine("The file on location {0} is successfully decrypted.", ime);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Decryption failed. Reason: {0}", e.Message);
-            }
-
-            try
-            {
-                AES.DecryptFile(prezime, prezimeDec, SecretKey.sKey);
-                Console.WriteLine("The file on location {0} is successfully decrypted.", prezime);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Decryption failed. Reason: {0}", e.Message);
-            }
-
-
             Console.WriteLine("\n[ZAHTEV] Dobavi potrosnju");
 
             // Autentifikacija
@@ -74,21 +44,55 @@ namespace Service
             WindowsIdentity windowsIdentity = identity as WindowsIdentity;
             Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
+            string sKey = DobaviSKey(windowsIdentity);
 
+            string idDec = null;
+            string imeDec = null;
+            string prezimeDec = null;
 
+            try
+            {
+                AES.DecryptString(id, out idDec, sKey);
+                Console.WriteLine("Parametar ID je uspesno dekriptovan.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
+            }
+
+            try
+            {
+                AES.DecryptString(ime, out imeDec, sKey);
+                Console.WriteLine("Parametar IME je uspesno dekriptovan.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
+            }
+
+            try
+            {
+                AES.DecryptString(prezime, out prezimeDec, sKey);
+                Console.WriteLine("Parametar PREZIME je uspesno dekriptovan.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
+            }
+
+            // TODO obriši
+            Console.WriteLine(idDec + "aaa");
+            Console.WriteLine(imeDec + "aaa");
+            Console.WriteLine(prezimeDec + "aaa");
 
             // Prosleđivanje zahteva LB-u
             List<string> rezultat = ProslediZahtevLB(new List<string> { "DobaviPotrosnju", idDec, imeDec, prezimeDec });
             string odgovor = "\n";
 
             foreach (string str in rezultat)
-            {                 
+            {
                 odgovor = odgovor + '\t' + str;
             }
-
-
-
-
 
             return odgovor;
         }
@@ -96,9 +100,6 @@ namespace Service
         //Operator
         public string IzmeniPotrosnju(string id, string novaPotrosnja)
         {
-            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
-            string userName = RbacFormatter.ParseName(principal.Identity.Name);
-
             if (Thread.CurrentPrincipal.IsInRole("Modifikuj"))
             {
                 Console.WriteLine("\n[ZAHTEV] Dodaj novo brojilo");
@@ -110,28 +111,29 @@ namespace Service
                 WindowsIdentity windowsIdentity = identity as WindowsIdentity;
                 Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
+                string sKey = DobaviSKey(windowsIdentity);
+
                 string idDec = null;
                 string novaPotrosnjaDec = null;
 
                 try
                 {
-                    AES.DecryptFile(id, idDec, SecretKey.sKey);
-                    Console.WriteLine("The file on location {0} is successfully decrypted.", id);
+                    AES.DecryptString(id, out idDec, sKey);
+                    Console.WriteLine("Parametar ID je uspesno dekriptovan.");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Decryption failed. Reason: {0}", e.Message);
+                    Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
                 }
                 try
                 {
-                    AES.DecryptFile(novaPotrosnja, novaPotrosnjaDec, SecretKey.sKey);
-                    Console.WriteLine("The file on location {0} is successfully decrypted.", novaPotrosnja);
+                    AES.DecryptString(novaPotrosnja, out novaPotrosnjaDec, sKey);
+                    Console.WriteLine("Parametar NOVAPOTROSNJA je uspesno dekriptovan.");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Decryption failed. Reason: {0}", e.Message);
+                    Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
                 }
-
 
                 // Prosleđivanje zahteva LB-u
                 List<string> rezultat = ProslediZahtevLB(new List<string> { "IzmeniPotrosnju", idDec, novaPotrosnjaDec });
@@ -153,9 +155,6 @@ namespace Service
         //Operator
         public string IzmeniID(string stariID, string noviID)
         {
-            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
-            string userName = RbacFormatter.ParseName(principal.Identity.Name);
-
             if (Thread.CurrentPrincipal.IsInRole("Modifikuj"))
             {
                 Console.WriteLine("\n[ZAHTEV] Izmeni ID brojila");
@@ -167,27 +166,29 @@ namespace Service
                 WindowsIdentity windowsIdentity = identity as WindowsIdentity;
                 Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
+                string sKey = DobaviSKey(windowsIdentity);
+
                 string stariIDDec = string.Empty;
-                string noviIDDEc = string.Empty;
+                string noviIDDec = string.Empty;
 
                 try
                 {
-                    AES.DecryptFile(stariID, stariIDDec, SecretKey.sKey);
-                    Console.WriteLine("The file on location {0} is successfully decrypted.", stariID);
+                    AES.DecryptString(stariID, out stariIDDec, sKey);
+                    Console.WriteLine("Parametar STARIID je uspesno dekriptovan.");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Decryption failed. Reason: {0}", e.Message);
+                    Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
                 }
 
                 try
                 {
-                    AES.DecryptFile(noviID, noviIDDEc, SecretKey.sKey);
-                    Console.WriteLine("The file on location {0} is successfully decrypted.", noviID);
+                    AES.DecryptString(noviID, out noviIDDec, sKey);
+                    Console.WriteLine("Parametar NOVIID je uspesno dekriptovan.");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Decryption failed. Reason: {0}", e.Message);
+                    Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
                 }
 
                 // Prosleđivanje zahteva LB-u
@@ -210,9 +211,6 @@ namespace Service
         //Administrator
         public string DodajBrojilo(string id, string ime, string prezime, string potrosnja)
         {
-            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
-            string userName = RbacFormatter.ParseName(principal.Identity.Name);
-
             if (Thread.CurrentPrincipal.IsInRole("DodajEntitet"))
             {
                 Console.WriteLine("\n[ZAHTEV] Dodaj novo brojilo");
@@ -224,6 +222,8 @@ namespace Service
                 WindowsIdentity windowsIdentity = identity as WindowsIdentity;
                 Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
+                string sKey = DobaviSKey(windowsIdentity);
+
                 string idDec = string.Empty;
                 string imeDec = string.Empty;
                 string prezimeDec = string.Empty;
@@ -231,43 +231,40 @@ namespace Service
 
                 try
                 {
-                    AES.DecryptFile(id, idDec, SecretKey.sKey);
-                    Console.WriteLine("The file on location {0} is successfully decrypted.", id);
+                    AES.DecryptString(id, out idDec, sKey);
+                    Console.WriteLine("Parametar ID je uspesno dekriptovan.");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Decryption failed. Reason: {0}", e.Message);
+                    Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
                 }
                 try
                 {
-                    AES.DecryptFile(ime, imeDec, SecretKey.sKey);
-                    Console.WriteLine("The file on location {0} is successfully decrypted.", ime);
+                    AES.DecryptString(ime, out imeDec, sKey);
+                    Console.WriteLine("Parametar IME je uspesno dekriptovan.");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Decryption failed. Reason: {0}", e.Message);
+                    Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
                 }
                 try
                 {
-                    AES.DecryptFile(prezime, prezimeDec, SecretKey.sKey);
-                    Console.WriteLine("The file on location {0} is successfully decrypted.", ime);
+                    AES.DecryptString(prezime, out prezimeDec, sKey);
+                    Console.WriteLine("Parametar PREZIME je uspesno dekriptovan.");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Decryption failed. Reason: {0}", e.Message);
+                    Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
                 }
                 try
                 {
-                    AES.DecryptFile(potrosnja, potrosnjaDec, SecretKey.sKey);
-                    Console.WriteLine("The file on location {0} is successfully decrypted.", ime);
+                    AES.DecryptString(potrosnja, out potrosnjaDec, sKey);
+                    Console.WriteLine("Parametar POTROSNJA je uspesno dekriptovan.");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Decryption failed. Reason: {0}", e.Message);
+                    Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
                 }
-
-
-
 
                 // Prosleđivanje zahteva LB-u
                 List<string> rezultat = ProslediZahtevLB(new List<string> { "DodajBrojilo", idDec, imeDec, prezimeDec, potrosnjaDec });
@@ -289,9 +286,6 @@ namespace Service
         //Administrator
         public string ObrisiBrojilo(string id)
         {
-            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
-            string userName = RbacFormatter.ParseName(principal.Identity.Name);
-
             if (Thread.CurrentPrincipal.IsInRole("ObrisiEntitet"))
             {
                 Console.WriteLine("\n[ZAHTEV] Obrisi brojilo");
@@ -303,18 +297,19 @@ namespace Service
                 WindowsIdentity windowsIdentity = identity as WindowsIdentity;
                 Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
+                string sKey = DobaviSKey(windowsIdentity);
+
                 string idDec = string.Empty;
 
                 try
                 {
-                    AES.DecryptFile(id, idDec, SecretKey.sKey);
-                    Console.WriteLine("The file on location {0} is successfully decrypted.", id);
+                    AES.DecryptString(id, out idDec, sKey);
+                    Console.WriteLine("Parametar ID je uspesno dekriptovan.");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Decryption failed. Reason: {0}", e.Message);
+                    Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
                 }
-
 
                 // Prosleđivanje zahteva LB-u
                 List<string> rezultat = ProslediZahtevLB(new List<string> { "ObrisiBrojilo", idDec });
@@ -336,9 +331,6 @@ namespace Service
         //Superadministrator
         public string ObrisiBazu()
         {
-            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
-            string userName = RbacFormatter.ParseName(principal.Identity.Name);
-
             if (Thread.CurrentPrincipal.IsInRole("ObrisiBazu"))
             {
                 Console.WriteLine("\n[ZAHTEV] Obrisi bazu podataka");
@@ -370,9 +362,6 @@ namespace Service
         //Superadministrator
         public string ArhivirajBazu()
         {
-            CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
-            string userName = RbacFormatter.ParseName(principal.Identity.Name);
-
             if (Thread.CurrentPrincipal.IsInRole("ArhivirajBazu"))
             {
                 Console.WriteLine("\n[ZAHTEV] Arhiviraj bazu podataka");

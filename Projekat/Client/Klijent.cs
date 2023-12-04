@@ -2,6 +2,7 @@
 using Manager;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
@@ -17,41 +18,44 @@ namespace Client
         // Kanal za konekciju
         public IServer kanal;
 
-        // Konstruktori
-        public Klijent(NetTcpBinding binding, EndpointAddress address) : base(binding, address)
-        {
-            kanal = this.CreateChannel();
-
-
-
-        }
-
         public Klijent(NetTcpBinding binding, string address) : base(binding, address)
         {
             kanal = this.CreateChannel();
 
-            string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+            // Klijent prilikom pokretanja generiše novi ključ za sebe
+            string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Manager\\SecretKeys\\";
+            string keyFile = Formatter.ParseName(WindowsIdentity.GetCurrent().Name) + ".txt";
 
-            this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.Custom;
-            this.Credentials.ServiceCertificate.Authentication.CustomCertificateValidator = new ClientCertValidator();
-            this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
-
-            /// Set appropriate client's certificate on the channel. Use CertManager class to obtain the certificate based on the "cltCertCN"
-            this.Credentials.ClientCertificate.Certificate =
-                CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
-
+            string newSecretKey = SecretKey.GenerateKey();
+            SecretKey.StoreKey(newSecretKey, path, keyFile);
         }
+
+        #region SKEY
+        // Pomoćna funkcija za dobavljanje ključa za enkripciju
+        private string DobaviSKey()
+        {
+            string kime = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+
+            string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Manager\\SecretKeys\\";
+            string keyFile = kime + ".txt";
+
+            string sKey = SecretKey.GetKey(path, keyFile);
+            return sKey;
+        }
+        #endregion
 
         #region ZAHTEVI
         public string DobaviPotrosnju(string id, string ime, string prezime)
         {
-            string idEnc = string.Empty;
-            string imeEnc = string.Empty;
-            string prezimeEnc = string.Empty;
+            string sKey = DobaviSKey();
 
-            AES.DecryptFile(id, idEnc, SecretKey.sKey);
-            AES.DecryptFile(ime, imeEnc, SecretKey.sKey);
-            AES.DecryptFile(prezime, prezimeEnc, SecretKey.sKey);
+            string idEnc = null;
+            string imeEnc = null;
+            string prezimeEnc = null;
+
+            AES.EncryptString(id, out idEnc, sKey);
+            AES.EncryptString(ime, out imeEnc, sKey);
+            AES.EncryptString(prezime, out prezimeEnc, sKey);
 
             try
             {
@@ -66,12 +70,13 @@ namespace Client
 
         public string IzmeniPotrosnju(string id, string novaPotrosnja)
         {
-            string idEnc = string.Empty;
-            string novaPotrosnjaEnc = string.Empty;
+            string sKey = DobaviSKey();
 
-            AES.DecryptFile(id, idEnc, SecretKey.sKey);
-            AES.DecryptFile(novaPotrosnja, novaPotrosnjaEnc, SecretKey.sKey);
+            string idEnc = null;
+            string novaPotrosnjaEnc = null;
 
+            AES.EncryptString(id, out idEnc, sKey);
+            AES.EncryptString(novaPotrosnja, out novaPotrosnjaEnc, sKey);
 
             try
             {
@@ -86,11 +91,14 @@ namespace Client
 
         public string IzmeniID(string stariID, string noviID)
         {
-            string stariIDEnc = string.Empty;
-            string noviIDEnc = string.Empty;
+            string sKey = DobaviSKey();
 
-            AES.DecryptFile(stariID, stariIDEnc, SecretKey.sKey);
-            AES.DecryptFile(noviID, noviIDEnc, SecretKey.sKey);
+            string stariIDEnc = null;
+            string noviIDEnc = null;
+
+            AES.EncryptString(stariID, out stariIDEnc, sKey);
+            AES.EncryptString(noviID, out noviIDEnc, sKey);
+
             try
             {
                 return kanal.IzmeniID(stariIDEnc, noviIDEnc);
@@ -104,16 +112,17 @@ namespace Client
 
         public string DodajBrojilo(string id, string ime, string prezime, string potrosnja)
         {
-            string idEnc = string.Empty;
-            string imeEnc = string.Empty;
-            string prezimeEnc = string.Empty;
-            string potrosnjaEnc = string.Empty;
+            string sKey = DobaviSKey();
 
-            AES.DecryptFile(id, idEnc, SecretKey.sKey);
-            AES.DecryptFile(ime, imeEnc, SecretKey.sKey);
-            AES.DecryptFile(prezime, prezimeEnc, SecretKey.sKey);
-            AES.DecryptFile(potrosnja, potrosnjaEnc, SecretKey.sKey);
+            string idEnc = null;
+            string imeEnc = null;
+            string prezimeEnc = null;
+            string potrosnjaEnc = null;
 
+            AES.EncryptString(id, out idEnc, sKey);
+            AES.EncryptString(ime, out imeEnc, sKey);
+            AES.EncryptString(prezime, out prezimeEnc, sKey);
+            AES.EncryptString(potrosnja, out potrosnjaEnc, sKey);
 
             try
             {
@@ -128,10 +137,10 @@ namespace Client
 
         public string ObrisiBrojilo(string id)
         {
+            string sKey = DobaviSKey();
 
-            string idEnc = string.Empty;
-
-            AES.DecryptFile(id, idEnc, SecretKey.sKey);
+            string idEnc = null;
+            AES.EncryptString(id, out idEnc, sKey);
 
             try
             {
@@ -169,8 +178,6 @@ namespace Client
             }
             return "";
         }
-
-        // GetSecretKey ??
         #endregion
 
         #region IDISPOSABLE
