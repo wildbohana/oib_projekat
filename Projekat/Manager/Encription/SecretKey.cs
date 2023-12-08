@@ -15,8 +15,17 @@ namespace Manager
         #region GENERATE/GET
         public static string GenerateKey()
         {
-            SymmetricAlgorithm symmAlgorithm = Aes.Create();
-            return symmAlgorithm == null ? String.Empty : ASCIIEncoding.ASCII.GetString(symmAlgorithm.Key);
+            string aesKey;
+            using (Aes aesAlgorithm = Aes.Create())
+            {
+                aesAlgorithm.KeySize = 128;
+                aesAlgorithm.GenerateKey();
+
+                // byte[] -> string (UTF-8)
+                aesKey = Convert.ToBase64String(aesAlgorithm.Key);
+            }
+
+            return aesKey;
         }
 
         public static string GetKey(string folder, string outFile)
@@ -46,7 +55,7 @@ namespace Manager
             }
 
             FileStream fOutput = new FileStream(folder + outFile, FileMode.OpenOrCreate, FileAccess.Write);
-            byte[] buffer = Encoding.ASCII.GetBytes(secretKey);
+            byte[] buffer = Encoding.UTF8.GetBytes(secretKey);
 
             try
             {
@@ -80,7 +89,7 @@ namespace Manager
                 fInput.Close();
             }
 
-            return ASCIIEncoding.ASCII.GetString(buffer);
+            return Encoding.UTF8.GetString(buffer);
         }
         #endregion
     }
