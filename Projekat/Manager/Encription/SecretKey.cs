@@ -21,7 +21,10 @@ namespace Manager
                 aesAlgorithm.KeySize = 128;
                 aesAlgorithm.GenerateKey();
 
-                // byte[] -> string (UTF-8)
+                // 128/6 = 5,33 chunks -> poslednja dva znaka će biti == da popune do 6 chunks (144 bytes)
+                // 6 chunks == jedan karakter (24 * 6 chunks == 24 karaktera)
+
+                // byte[] -> string (6-bit) (24 karaktera)
                 aesKey = Convert.ToBase64String(aesAlgorithm.Key);
             }
 
@@ -55,6 +58,7 @@ namespace Manager
             }
 
             FileStream fOutput = new FileStream(folder + outFile, FileMode.OpenOrCreate, FileAccess.Write);
+            // Ključ se čuva u UTF-8 formatu jer je to podrazumevan format Windows OS fajl sistema
             byte[] buffer = Encoding.UTF8.GetBytes(secretKey);
 
             try
@@ -73,6 +77,7 @@ namespace Manager
 
         public static string LoadKey(string inFile)
         {
+            // Ključ se čita iz UTF-8 formata jer je tako i sačuvan iz gore navedenog razloga
             FileStream fInput = new FileStream(inFile, FileMode.Open, FileAccess.Read);
             byte[] buffer = new byte[(int)fInput.Length];
 

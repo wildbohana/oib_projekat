@@ -288,11 +288,18 @@ namespace Worker
         {
             List<string> procitano = new List<string>();
 
+            // Ako ne postoji fajl, kreiraj ga
+            string bazatxt = direktorijumBaza + "baza.txt";
+            if (!File.Exists(bazatxt))
+            {
+                File.CreateText(bazatxt);
+            }
+
             if (kontrolaPristupa.WaitOne())
             {
                 try
                 {
-                    StreamReader sr = new StreamReader(direktorijumBaza + "baza.txt");
+                    StreamReader sr = new StreamReader(bazatxt);
                     string red = "";
 
                     while ((red = sr.ReadLine()) != null)
@@ -314,11 +321,18 @@ namespace Worker
         // Upis u fajl
         static void UpisiUFajl(List<string> upis)
         {
+            // Ako ne postoji fajl, kreiraj ga
+            string bazatxt = direktorijumBaza + "baza.txt";
+            if (!File.Exists(bazatxt))
+            {
+                File.CreateText(bazatxt);
+            }
+
             if (kontrolaPristupa.WaitOne())
             {
                 try
                 {
-                    StreamWriter sw = new StreamWriter(direktorijumBaza + "baza.txt");
+                    StreamWriter sw = new StreamWriter(bazatxt);
                     foreach (string red in upis)
                     {
                         sw.WriteLine(red);

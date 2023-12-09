@@ -1,2 +1,0 @@
-12345678,Test,Prvi,300
-32165487,Nikola,Kuravica,456

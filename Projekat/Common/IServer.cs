@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,5 +37,9 @@ namespace Common
         // Samo super-admini
         [OperationContract]
         string ArhivirajBazu();
+
+        // Za secret key
+        [OperationContract]
+        string DobaviSKey(string lh, string kime);
     }
 }
