@@ -71,32 +71,7 @@ namespace Manager.Audit
             }
         }
 
-        public static void ProcessCritical(string processName, DateTime dt, int n)
-        {
-            if (customLog != null)
-            {
-                string processInfo = AuditEvents.AuditCritical;
-                string message = string.Format(processInfo, processName, dt, n);
-                customLog.WriteEntry(message);
-            }
-            else
-            {
-                throw new ArgumentException(string.Format("Error while trying to write event (eventid = {0}) to event log.", (int)CriticalLevel.ProcessCritical));
-            }
-        }
-
-        public static void ProcessLogFromMS(string message)
-        {
-            if (customLog != null)
-            {
-                string message_to = string.Format(message);
-                customLog.WriteEntry(message_to);
-            }
-            else
-            {
-                throw new ArgumentException(string.Format("Error while trying to write event LogToIDSFromMS to event log."));
-            }
-        }
+        
 
 
         public void Dispose()

@@ -16,14 +16,6 @@ namespace Manager.Audit
         
     }
 
-    public enum CriticalLevel
-    {
-        ProcessInformation = 0,
-        ProcessWarning = 1,
-        ProcessCritical = 2
-
-    }
-
     public class AuditEvents
     {
         private static ResourceManager resourceManager = null;
@@ -68,29 +60,6 @@ namespace Manager.Audit
             }
         }
 
-        public static string AuditInformation
-        {
-            get
-            {
-                return ResourceManager.GetString(CriticalLevel.ProcessInformation.ToString());
-            }
-        }
-
-        public static string AuditWarning
-        {
-            get
-            {
-                return ResourceManager.GetString(CriticalLevel.ProcessWarning.ToString());
-            }
-        }
-
-        public static string AuditCritical
-        {
-            get
-            {
-                return ResourceManager.GetString(CriticalLevel.ProcessCritical.ToString());
-            }
-        }
 
     }
 }
