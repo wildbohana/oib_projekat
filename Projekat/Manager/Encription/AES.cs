@@ -9,6 +9,9 @@ using System.Xml.Linq;
 
 // AES uvek radi u ECB modu
 
+// string se interno u programu čuva u UTF-16 formatu (UTF-16 == Unicode)
+// string se u fajlovima čuva u UTF-8
+
 namespace Manager
 {
     public class AES
@@ -16,18 +19,19 @@ namespace Manager
         #region ENKRIPCIJA
         public static void EncryptString(string inMessage, out string outMessage, string secretKey)
         {
-            byte[] forEncryption = Encoding.Unicode.GetBytes(inMessage);
-            byte[] key = Encoding.ASCII.GetBytes(secretKey);
+            byte[] forEncryption = Encoding.Default.GetBytes(inMessage);        // UTF-16 string
+            byte[] key = Convert.FromBase64String(secretKey);                   // 8-bit  string
             byte[] encryptedMessage = null;
 
             AesCryptoServiceProvider aesCryptoProvider = new AesCryptoServiceProvider
             {
-                Key = ASCIIEncoding.ASCII.GetBytes(secretKey),
                 Mode = CipherMode.ECB,
-                Padding = PaddingMode.PKCS7
+                Padding = PaddingMode.PKCS7,
+                KeySize = 128,
+                BlockSize = 128
             };
-            //ICryptoTransform aesEncryptTransform = aesCryptoProvider.CreateEncryptor(key, null);
-            ICryptoTransform aesEncryptTransform = aesCryptoProvider.CreateEncryptor();
+
+            ICryptoTransform aesEncryptTransform = aesCryptoProvider.CreateEncryptor(key, null);
 
             using (MemoryStream memoryStream = new MemoryStream())
             {
@@ -35,10 +39,10 @@ namespace Manager
                 {
                     cryptoStream.Write(forEncryption, 0, forEncryption.Length);
                     cryptoStream.FlushFinalBlock();
-                    //cryptoStream.Close();
+                    cryptoStream.Close();
 
                     encryptedMessage = memoryStream.ToArray();
-                    outMessage = Encoding.Unicode.GetString(encryptedMessage);
+                    outMessage = Encoding.Default.GetString(encryptedMessage);
                 }
             }
         }
@@ -47,17 +51,19 @@ namespace Manager
         #region DEKRIPCIJA
         public static void DecryptString(string inMessage, out string outMessage, string secretKey)
         {
-            byte[] message = Encoding.Unicode.GetBytes(inMessage);
-            byte[] key = Encoding.ASCII.GetBytes(secretKey);
+            byte[] message = Encoding.Default.GetBytes(inMessage);
+            byte[] key = Convert.FromBase64String(secretKey);
             byte[] decryptedData = null;
 
             AesCryptoServiceProvider aesCryptoProvider = new AesCryptoServiceProvider
             {
-                Key = ASCIIEncoding.ASCII.GetBytes(secretKey),
                 Mode = CipherMode.ECB,
-                Padding = PaddingMode.PKCS7
+                Padding = PaddingMode.PKCS7,
+                KeySize = 128,
+                BlockSize = 128
             };
-            ICryptoTransform aesDecryptTransform = aesCryptoProvider.CreateDecryptor();
+
+            ICryptoTransform aesDecryptTransform = aesCryptoProvider.CreateDecryptor(key, null);
 
             using (MemoryStream memoryStream = new MemoryStream(message))
             {
@@ -65,10 +71,11 @@ namespace Manager
                 {
                     decryptedData = new byte[message.Length];
                     cryptoStream.Read(decryptedData, 0, decryptedData.Length);
+                    cryptoStream.Close();
                 }
             }
 
-            outMessage = Encoding.Unicode.GetString(decryptedData);
+            outMessage = Encoding.Default.GetString(decryptedData);
         }
         #endregion
     }

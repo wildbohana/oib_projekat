@@ -9,6 +9,7 @@ using System.Security.Principal;
 using System.ServiceModel;
 using System.ServiceModel.Security;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Client
@@ -21,25 +22,13 @@ namespace Client
         public Klijent(NetTcpBinding binding, string address) : base(binding, address)
         {
             kanal = this.CreateChannel();
-
-            // Klijent prilikom pokretanja generiše novi ključ za sebe
-            string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Manager\\SecretKeys\\";
-            string keyFile = Formatter.ParseName(WindowsIdentity.GetCurrent().Name) + ".txt";
-
-            string newSecretKey = SecretKey.GenerateKey();
-            SecretKey.StoreKey(newSecretKey, path, keyFile);
         }
 
         #region SKEY
         // Pomoćna funkcija za dobavljanje ključa za enkripciju
-        private string DobaviSKey()
+        public string DobaviSKey(string lhkorisnika, string kime)
         {
-            string kime = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
-
-            string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Manager\\SecretKeys\\";
-            string keyFile = kime + ".txt";
-
-            string sKey = SecretKey.GetKey(path, keyFile);
+            string sKey = kanal.DobaviSKey(lhkorisnika, kime);
             return sKey;
         }
         #endregion
@@ -47,7 +36,11 @@ namespace Client
         #region ZAHTEVI
         public string DobaviPotrosnju(string id, string ime, string prezime)
         {
-            string sKey = DobaviSKey();
+            WindowsIdentity wi = WindowsIdentity.GetCurrent();
+            string fullname = wi.Name.ToString();
+            string lhkorisnika = fullname.Split('\\')[0];
+            string kime = fullname.Split('\\')[1];
+            string sKey = DobaviSKey(lhkorisnika, kime);
 
             string idEnc = null;
             string imeEnc = null;
@@ -70,7 +63,11 @@ namespace Client
 
         public string IzmeniPotrosnju(string id, string novaPotrosnja)
         {
-            string sKey = DobaviSKey();
+            WindowsIdentity wi = WindowsIdentity.GetCurrent();
+            string fullname = wi.Name.ToString();
+            string lhkorisnika = fullname.Split('\\')[0];
+            string kime = fullname.Split('\\')[1];
+            string sKey = DobaviSKey(lhkorisnika, kime);
 
             string idEnc = null;
             string novaPotrosnjaEnc = null;
@@ -91,7 +88,11 @@ namespace Client
 
         public string IzmeniID(string stariID, string noviID)
         {
-            string sKey = DobaviSKey();
+            WindowsIdentity wi = WindowsIdentity.GetCurrent();
+            string fullname = wi.Name.ToString();
+            string lhkorisnika = fullname.Split('\\')[0];
+            string kime = fullname.Split('\\')[1];
+            string sKey = DobaviSKey(lhkorisnika, kime);
 
             string stariIDEnc = null;
             string noviIDEnc = null;
@@ -112,7 +113,11 @@ namespace Client
 
         public string DodajBrojilo(string id, string ime, string prezime, string potrosnja)
         {
-            string sKey = DobaviSKey();
+            WindowsIdentity wi = WindowsIdentity.GetCurrent();
+            string fullname = wi.Name.ToString();
+            string lhkorisnika = fullname.Split('\\')[0];
+            string kime = fullname.Split('\\')[1];
+            string sKey = DobaviSKey(lhkorisnika, kime);
 
             string idEnc = null;
             string imeEnc = null;
@@ -137,7 +142,11 @@ namespace Client
 
         public string ObrisiBrojilo(string id)
         {
-            string sKey = DobaviSKey();
+            WindowsIdentity wi = WindowsIdentity.GetCurrent();
+            string fullname = wi.Name.ToString();
+            string lhkorisnika = fullname.Split('\\')[0];
+            string kime = fullname.Split('\\')[1];
+            string sKey = DobaviSKey(lhkorisnika, kime);
 
             string idEnc = null;
             AES.EncryptString(id, out idEnc, sKey);

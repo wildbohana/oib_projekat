@@ -20,19 +20,28 @@ namespace Service
 {
     public class CentralniServer : IServer
     {
+<<<<<<< HEAD
         ClientActionLogger cLog = new ClientActionLogger();
         // Pomoćna funkcija
         private string DobaviSKey(WindowsIdentity wi)
+=======
+        #region SKEY
+        private string NapraviSKey(string path, string keyFile)
+>>>>>>> cc5619fe7497b26e0c09723b69a475f4f8ac9266
         {
-            string fullname = wi.Name.ToString();
-            string kime = fullname.Split('\\')[1];
-
-            string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\Manager\\SecretKeys\\";
-            string keyFile = kime + ".txt";
-
             string sKey = SecretKey.GetKey(path, keyFile);
             return sKey;
         }
+
+        public string DobaviSKey(string lhkorisnika, string kime)
+        {
+            string path = "..\\..\\SecretKeys\\";
+            string keyFile = lhkorisnika + "_" + kime + ".txt";
+
+            string skey = NapraviSKey(path, keyFile);
+            return skey;
+        }
+        #endregion
 
         #region ISERVER
         public string DobaviPotrosnju(string id, string ime, string prezime)
@@ -46,7 +55,10 @@ namespace Service
             WindowsIdentity windowsIdentity = identity as WindowsIdentity;
             Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
-            string sKey = DobaviSKey(windowsIdentity);
+            string fullname = windowsIdentity.Name.ToString();
+            string lhkorisnika = fullname.Split('\\')[0];
+            string kime = fullname.Split('\\')[1];
+            string sKey = DobaviSKey(lhkorisnika, kime);
 
             string idDec = null;
             string imeDec = null;
@@ -82,11 +94,6 @@ namespace Service
                 Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
             }
 
-            // TODO obriši
-            Console.WriteLine(idDec + "aaa");
-            Console.WriteLine(imeDec + "aaa");
-            Console.WriteLine(prezimeDec + "aaa");
-
             // Prosleđivanje zahteva LB-u
             List<string> rezultat = ProslediZahtevLB(new List<string> { "DobaviPotrosnju", idDec, imeDec, prezimeDec });
             string odgovor = "\n";
@@ -117,7 +124,10 @@ namespace Service
                 WindowsIdentity windowsIdentity = identity as WindowsIdentity;
                 Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
-                string sKey = DobaviSKey(windowsIdentity);
+                string fullname = windowsIdentity.Name.ToString();
+                string lhkorisnika = fullname.Split('\\')[0];
+                string kime = fullname.Split('\\')[1];
+                string sKey = DobaviSKey(lhkorisnika, kime);
 
                 string idDec = null;
                 string novaPotrosnjaDec = null;
@@ -197,7 +207,10 @@ namespace Service
                 WindowsIdentity windowsIdentity = identity as WindowsIdentity;
                 Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
-                string sKey = DobaviSKey(windowsIdentity);
+                string fullname = windowsIdentity.Name.ToString();
+                string lhkorisnika = fullname.Split('\\')[0];
+                string kime = fullname.Split('\\')[1];
+                string sKey = DobaviSKey(lhkorisnika, kime);
 
                 string stariIDDec = string.Empty;
                 string noviIDDec = string.Empty;
@@ -278,7 +291,10 @@ namespace Service
                 WindowsIdentity windowsIdentity = identity as WindowsIdentity;
                 Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
-                string sKey = DobaviSKey(windowsIdentity);
+                string fullname = windowsIdentity.Name.ToString();
+                string lhkorisnika = fullname.Split('\\')[0];
+                string kime = fullname.Split('\\')[1];
+                string sKey = DobaviSKey(lhkorisnika, kime);
 
                 string idDec = string.Empty;
                 string imeDec = string.Empty;
@@ -377,7 +393,10 @@ namespace Service
                 WindowsIdentity windowsIdentity = identity as WindowsIdentity;
                 Console.WriteLine("Ime klijenta: " + windowsIdentity.Name);
 
-                string sKey = DobaviSKey(windowsIdentity);
+                string fullname = windowsIdentity.Name.ToString();
+                string lhkorisnika = fullname.Split('\\')[0];
+                string kime = fullname.Split('\\')[1];
+                string sKey = DobaviSKey(lhkorisnika, kime);
 
                 string idDec = string.Empty;
 
