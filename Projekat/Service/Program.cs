@@ -1,5 +1,6 @@
 ﻿using Common;
 using Manager;
+using Manager.Audit;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Policy;
@@ -26,6 +27,16 @@ namespace Service
             // Podešavanje hosta
             ServiceHost host = new ServiceHost(typeof(CentralniServer));
             host.AddServiceEndpoint(typeof(IServer), binding, adresa);
+
+            //audit
+            ServiceSecurityAuditBehavior newAuditBehavior = new ServiceSecurityAuditBehavior();
+            newAuditBehavior.AuditLogLocation = AuditLogLocation.Application;
+            newAuditBehavior.ServiceAuthorizationAuditLevel = AuditLevel.SuccessOrFailure;
+
+            host.Description.Behaviors.Remove<ServiceSecurityAuditBehavior>();
+            host.Description.Behaviors.Add(newAuditBehavior);
+
+            
 
             // Dodavanje custom sigurnosne polise
             host.Authorization.PrincipalPermissionMode = PrincipalPermissionMode.Custom;

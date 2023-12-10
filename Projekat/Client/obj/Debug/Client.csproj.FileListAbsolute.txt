@@ -1,0 +1,13 @@
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Client\bin\Debug\Client.exe.config
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Client\bin\Debug\Client.exe
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Client\bin\Debug\Client.pdb
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Client\bin\Debug\Common.dll
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Client\bin\Debug\Manager.dll
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Client\bin\Debug\Common.pdb
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Client\bin\Debug\Manager.pdb
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Client\obj\Debug\Client.csproj.AssemblyReference.cache
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Client\obj\Debug\Client.csproj.SuggestedBindingRedirects.cache
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Client\obj\Debug\Client.csproj.CopyComplete
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Client\obj\Debug\Client.exe
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Client\obj\Debug\Client.pdb

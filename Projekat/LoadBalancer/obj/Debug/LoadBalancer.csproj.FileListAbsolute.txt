@@ -11,3 +11,16 @@ C:\Users\Uros\Desktop\Projekat\LoadBalancer\obj\Debug\LoadBalancer.csproj.CoreCo
 C:\Users\Uros\Desktop\Projekat\LoadBalancer\obj\Debug\LoadBalancer.csproj.CopyComplete
 C:\Users\Uros\Desktop\Projekat\LoadBalancer\obj\Debug\LoadBalancer.exe
 C:\Users\Uros\Desktop\Projekat\LoadBalancer\obj\Debug\LoadBalancer.pdb
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\bin\Debug\LoadBalancer.exe.config
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\bin\Debug\LoadBalancer.exe
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\bin\Debug\LoadBalancer.pdb
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\bin\Debug\Common.dll
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\bin\Debug\Manager.dll
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\bin\Debug\Common.pdb
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\bin\Debug\Manager.pdb
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\obj\Debug\LoadBalancer.csproj.AssemblyReference.cache
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\obj\Debug\LoadBalancer.csproj.SuggestedBindingRedirects.cache
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\obj\Debug\LoadBalancer.csproj.CoreCompileInputs.cache
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\obj\Debug\LoadBalancer.csproj.CopyComplete
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\obj\Debug\LoadBalancer.exe
+C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\obj\Debug\LoadBalancer.pdb
