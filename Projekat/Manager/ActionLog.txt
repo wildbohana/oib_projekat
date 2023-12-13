@@ -25,3 +25,8 @@
 12/10/2023 2:20:25 AM 	 User SuperKorisnik performed ObrisiBazu action successfully!
 12/10/2023 2:20:49 AM 	 User AdminKorisnik performed ArhivirajBazu action unsuccessfully!
 12/10/2023 2:21:05 AM 	 User AdminKorisnik performed ObrisiBazu action unsuccessfully!
+11/12/2023 11:28:54 	 User urosi performed ObrisiBazu action unsuccessfully!
+11/12/2023 11:33:29 	 User urosi performed ObrisiBazu action unsuccessfully!
+11/12/2023 11:40:10 	 User urosi performed ObrisiBazu action unsuccessfully!
+11/12/2023 11:42:19 	 User urosi performed ObrisiBazu action unsuccessfully!
+11/12/2023 11:58:53 	 User urosi performed ObrisiBazu action unsuccessfully!

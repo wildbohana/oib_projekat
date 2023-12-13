@@ -67,7 +67,8 @@ namespace Manager.Audit
             }
             else
             {
-                throw new ArgumentException(string.Format("Error while trying to write event (eventid = {0}) to event log.", (int)AuditEventTypes.AuthorizationFailed));
+                string msg = "Error while trying to write event: EVENT ID " + AuditEventTypes.AuthorizationFailed.ToString() + "to event log.";
+                throw new ArgumentException(msg);
             }
         }
 

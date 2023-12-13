@@ -21,6 +21,8 @@ namespace Manager.Audit
         private static ResourceManager resourceManager = null;
         private static object resourceLock = new object();
 
+        // permissionString = (string)RolesConfigFile.ResourceManager.GetObject(rolename)
+
         private static ResourceManager ResourceManager
         {
             get
@@ -39,16 +41,20 @@ namespace Manager.Audit
         public static string AuthenticationSuccess
         {
             get
-            { 
-                return ResourceManager.GetString(AuditEventTypes.AuthenticationSuccess.ToString());
+            {
+                //return ResourceManager.GetString(AuditEventTypes.AuthenticationSuccess.ToString());
+                //return (string)AuditEventFile.ResourceManager.GetObject(AuthenticationSuccess);
+                return "ti nikada neces biti gas";
             }
         }
 
         public static string AuthorizationSuccess
         {
             get
-            { 
-                return ResourceManager.GetString(AuditEventTypes.AuthorizationSuccess.ToString());
+            {
+                //return ResourceManager.GetString(AuditEventTypes.AuthorizationSuccess.ToString());
+                //return (string)AuditEventFile.ResourceManager.GetObject(AuthorizationSuccess);
+                return "Vi cete mozda nekada biti gas.";
             }
         }
 
@@ -56,7 +62,9 @@ namespace Manager.Audit
         {
             get
             {
-                return ResourceManager.GetString(AuditEventTypes.AuthorizationFailed.ToString());
+                //return ResourceManager.GetString(AuditEventTypes.AuthorizationFailed.ToString());
+                //return (string)AuditEventFile.ResourceManager.GetObject(AuthorizationFailed);
+                return "E nes dalje vala";
             }
         }
 

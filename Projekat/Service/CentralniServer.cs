@@ -20,14 +20,13 @@ namespace Service
 {
     public class CentralniServer : IServer
     {
-<<<<<<< HEAD
+
         ClientActionLogger cLog = new ClientActionLogger();
-        // Pomoćna funkcija
-        private string DobaviSKey(WindowsIdentity wi)
-=======
+ 
+
         #region SKEY
         private string NapraviSKey(string path, string keyFile)
->>>>>>> cc5619fe7497b26e0c09723b69a475f4f8ac9266
+
         {
             string sKey = SecretKey.GetKey(path, keyFile);
             return sKey;

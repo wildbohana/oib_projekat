@@ -61,7 +61,7 @@ namespace Manager.Audit {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User {0} is successfully authenticated..
+        ///   Looks up a localized string similar to User is successfully authenticated..
         /// </summary>
         internal static string AuthenticationSuccess {
             get {
@@ -70,16 +70,16 @@ namespace Manager.Audit {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User {0} failed to access {1}. Reason: {2}..
+        ///   Looks up a localized string similar to User failed to access method. .
         /// </summary>
-        internal static string AuthorizationFailure {
+        internal static string AuthorizationFailed {
             get {
-                return ResourceManager.GetString("AuthorizationFailure", resourceCulture);
+                return ResourceManager.GetString("AuthorizationFailed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User {0} successfully accessed to {1}..
+        ///   Looks up a localized string similar to User successfully accessed to method..
         /// </summary>
         internal static string AuthorizationSuccess {
             get {
