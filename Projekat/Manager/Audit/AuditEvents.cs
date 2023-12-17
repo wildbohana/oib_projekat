@@ -12,8 +12,7 @@ namespace Manager.Audit
     {
         AuthenticationSuccess = 0,
         AuthorizationSuccess = 1,
-        AuthorizationFailed = 2,
-        
+        AuthorizationFailed = 2
     }
 
     public class AuditEvents
@@ -21,17 +20,15 @@ namespace Manager.Audit
         private static ResourceManager resourceManager = null;
         private static object resourceLock = new object();
 
-        // permissionString = (string)RolesConfigFile.ResourceManager.GetObject(rolename)
-
-        private static ResourceManager ResourceManager
+        private static ResourceManager ResourceMgr
         {
             get
             {
                 lock (resourceLock)
                 {
-                    if (resourceManager == null) { }
+                    if (resourceManager == null)
                     {
-                        resourceManager = new ResourceManager(typeof(AuditEventFile).ToString(), Assembly.GetExecutingAssembly());
+                        resourceManager = new ResourceManager(typeof(AuditEventFile).FullName, Assembly.GetExecutingAssembly());
                     }
                     return resourceManager;
                 }
@@ -42,9 +39,7 @@ namespace Manager.Audit
         {
             get
             {
-                //return ResourceManager.GetString(AuditEventTypes.AuthenticationSuccess.ToString());
-                //return (string)AuditEventFile.ResourceManager.GetObject(AuthenticationSuccess);
-                return "ti nikada neces biti gas";
+                return ResourceMgr.GetString(nameof(AuditEventTypes.AuthenticationSuccess));
             }
         }
 
@@ -52,9 +47,7 @@ namespace Manager.Audit
         {
             get
             {
-                //return ResourceManager.GetString(AuditEventTypes.AuthorizationSuccess.ToString());
-                //return (string)AuditEventFile.ResourceManager.GetObject(AuthorizationSuccess);
-                return "Vi cete mozda nekada biti gas.";
+                return ResourceMgr.GetString(nameof(AuditEventTypes.AuthorizationSuccess));
             }
         }
 
@@ -62,12 +55,8 @@ namespace Manager.Audit
         {
             get
             {
-                //return ResourceManager.GetString(AuditEventTypes.AuthorizationFailed.ToString());
-                //return (string)AuditEventFile.ResourceManager.GetObject(AuthorizationFailed);
-                return "E nes dalje vala";
+                return ResourceMgr.GetString(AuditEventTypes.AuthorizationFailed.ToString());
             }
         }
-
-
     }
 }

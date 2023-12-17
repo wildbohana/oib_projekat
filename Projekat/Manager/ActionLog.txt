@@ -30,3 +30,9 @@
 11/12/2023 11:40:10 	 User urosi performed ObrisiBazu action unsuccessfully!
 11/12/2023 11:42:19 	 User urosi performed ObrisiBazu action unsuccessfully!
 11/12/2023 11:58:53 	 User urosi performed ObrisiBazu action unsuccessfully!
+17.12.2023. 20:09:36 	 User AdminKorisnik performed ObrisiBazu action unsuccessfully!
+17.12.2023. 20:12:21 	 User AdminKorisnik performed DodajBrojilo action successfully!
+17.12.2023. 20:21:19 	 User AdminKorisnik performed ObrisiBazu action unsuccessfully!
+17.12.2023. 20:22:47 	 User AdminKorisnik performed ArhivirajBazu action unsuccessfully!
+17.12.2023. 20:24:24 	 User AdminKorisnik performed DodajBrojilo action successfully!
+17.12.2023. 20:24:27 	 User AdminKorisnik performed ObrisiBazu action unsuccessfully!

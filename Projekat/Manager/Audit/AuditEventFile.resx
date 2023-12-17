@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AuthenticationSuccess" xml:space="preserve">
-    <value>User is successfully authenticated.</value>
+    <value>User {0} is successfully authenticated.</value>
   </data>
   <data name="AuthorizationFailed" xml:space="preserve">
-    <value>User failed to access method. </value>
+    <value>User {0} failed to access method {1}. Reason: {2}</value>
   </data>
   <data name="AuthorizationSuccess" xml:space="preserve">
-    <value>User successfully accessed to method.</value>
+    <value>User {0} successfully accessed to method {1}.</value>
   </data>
 </root>

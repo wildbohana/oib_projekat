@@ -61,7 +61,7 @@ namespace Manager.Audit {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User is successfully authenticated..
+        ///   Looks up a localized string similar to User {0} is successfully authenticated..
         /// </summary>
         internal static string AuthenticationSuccess {
             get {
@@ -70,7 +70,7 @@ namespace Manager.Audit {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User failed to access method. .
+        ///   Looks up a localized string similar to User {0} failed to access method {1}. Reason: {2}.
         /// </summary>
         internal static string AuthorizationFailed {
             get {
@@ -79,7 +79,7 @@ namespace Manager.Audit {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User successfully accessed to method..
+        ///   Looks up a localized string similar to User {0} successfully accessed to method {1}..
         /// </summary>
         internal static string AuthorizationSuccess {
             get {

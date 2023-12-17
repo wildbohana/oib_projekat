@@ -15,23 +15,25 @@ namespace Manager.Audit
 
         static Audit()
         {
-            try{
+            try
+            {
                 if (!EventLog.SourceExists(SourceName))
                 {
                     EventLog.CreateEventSource(SourceName, LogName);
                 }
                 customLog = new EventLog(LogName, Environment.MachineName, SourceName);
 
-            }catch(Exception e)
+            }
+            catch(Exception e)
             {
                 customLog = null;
-                Console.WriteLine("Error while trying to create log handle. Error = {0}", e.Message);
+                Console.WriteLine("\nError while trying to create log handle. Error = {0}", e.Message);
             }
         }
 
         public static void AuthenticationSuccess(string username)
         {
-            if(customLog != null)
+            if (customLog != null)
             {
                 string UserAuthenticationSuccess = AuditEvents.AuthenticationSuccess;
                 string message = String.Format(UserAuthenticationSuccess, username);
@@ -39,7 +41,7 @@ namespace Manager.Audit
             }
             else
             {
-                throw new ArgumentException(string.Format("Error while trying to write event (eventid = {0}) to event log.", (int)AuditEventTypes.AuthenticationSuccess));
+                throw new ArgumentException(string.Format("\nError while trying to write event (eventid = {0}) to event log.", (int)AuditEventTypes.AuthenticationSuccess));
             }
         }
 
