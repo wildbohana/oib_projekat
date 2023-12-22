@@ -52,7 +52,6 @@
     <Compile Include="Audit\AuditEvents.cs" />
     <Compile Include="Certificates\CertManager.cs" />
     <Compile Include="Certificates\Formatter.cs" />
-    <Compile Include="ClientActionLogger.cs" />
     <Compile Include="Encription\AES.cs" />
     <Compile Include="Encription\SecretKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,9 +74,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>RolesConfigFile.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ActionLog.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

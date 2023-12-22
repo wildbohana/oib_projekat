@@ -21,9 +21,6 @@ namespace Manager
                 aesAlgorithm.KeySize = 128;
                 aesAlgorithm.GenerateKey();
 
-                // 128/6 = 5,33 chunks -> poslednja dva znaka će biti == da popune do 6 chunks (144 bytes)
-                // 6 chunks == jedan karakter (24 * 6 chunks == 24 karaktera)
-
                 // byte[] -> string (6-bit) (24 karaktera)
                 aesKey = Convert.ToBase64String(aesAlgorithm.Key);
             }
@@ -33,8 +30,9 @@ namespace Manager
 
         public static string GetKey(string folder, string outFile)
         {
-            string fullPath = folder + outFile;
             string key;
+            string fullPath = folder + outFile;
+            
             if (!File.Exists(fullPath))
             {
                 key = GenerateKey();
@@ -54,13 +52,14 @@ namespace Manager
         {
             if (!Directory.Exists(folder))
             {
-                Directory.CreateDirectory(folder);
+                int duzina = folder.Length;
+                string bezBekslesh = folder.Substring(0, duzina - 1);
+                Directory.CreateDirectory(bezBekslesh);
             }
-
             FileStream fOutput = new FileStream(folder + outFile, FileMode.OpenOrCreate, FileAccess.Write);
-            // Ključ se čuva u UTF-8 formatu jer je to podrazumevan format Windows OS fajl sistema
-            byte[] buffer = Encoding.UTF8.GetBytes(secretKey);
 
+            // Ključ se čuva u UTF-8 formatu jer je to podrazumevan format Windows OS fajl sistema            
+            byte[] buffer = Encoding.UTF8.GetBytes(secretKey);
             try
             {
                 fOutput.Write(buffer, 0, buffer.Length);
@@ -77,10 +76,9 @@ namespace Manager
 
         public static string LoadKey(string inFile)
         {
-            // Ključ se čita iz UTF-8 formata jer je tako i sačuvan iz gore navedenog razloga
             FileStream fInput = new FileStream(inFile, FileMode.Open, FileAccess.Read);
-            byte[] buffer = new byte[(int)fInput.Length];
 
+            byte[] buffer = new byte[(int)fInput.Length];
             try
             {
                 fInput.Read(buffer, 0, (int)fInput.Length);
@@ -94,6 +92,7 @@ namespace Manager
                 fInput.Close();
             }
 
+            // Ključ se učitava u UTF-8 formatu jer je tako i sačuvan iz gore navedenog razloga
             return Encoding.UTF8.GetString(buffer);
         }
         #endregion

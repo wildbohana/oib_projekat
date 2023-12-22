@@ -29,6 +29,9 @@ namespace Client
         public string DobaviSKey(string lhkorisnika, string kime)
         {
             string sKey = kanal.DobaviSKey(lhkorisnika, kime);
+            
+            // TODO dodaj dekripciju privatnim ključem
+
             return sKey;
         }
         #endregion

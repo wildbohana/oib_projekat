@@ -24,7 +24,7 @@ namespace Manager.Audit
                 customLog = new EventLog(LogName, Environment.MachineName, SourceName);
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 customLog = null;
                 Console.WriteLine("\nError while trying to create log handle. Error = {0}", e.Message);
@@ -73,9 +73,6 @@ namespace Manager.Audit
                 throw new ArgumentException(msg);
             }
         }
-
-        
-
 
         public void Dispose()
         {

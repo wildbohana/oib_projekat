@@ -28,15 +28,13 @@ namespace Service
             ServiceHost host = new ServiceHost(typeof(CentralniServer));
             host.AddServiceEndpoint(typeof(IServer), binding, adresa);
 
-            //audit
+            // Audit
             ServiceSecurityAuditBehavior newAuditBehavior = new ServiceSecurityAuditBehavior();
             newAuditBehavior.AuditLogLocation = AuditLogLocation.Application;
             newAuditBehavior.ServiceAuthorizationAuditLevel = AuditLevel.SuccessOrFailure;
 
             host.Description.Behaviors.Remove<ServiceSecurityAuditBehavior>();
             host.Description.Behaviors.Add(newAuditBehavior);
-
-            
 
             // Dodavanje custom sigurnosne polise
             host.Authorization.PrincipalPermissionMode = PrincipalPermissionMode.Custom;
