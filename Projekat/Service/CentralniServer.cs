@@ -40,17 +40,17 @@ namespace Service
         // Za klijenta (sa enkripcijom preko javnog ključa)
         public string DobaviSKey(string lhkorisnika, string kime)
         {
-            // Ime onoga ko je pozvao ovu metodu dobijaš preko Thread (jer klijenti samo pozivaju ovo)
             string path = "..\\..\\SecretKeys\\";
             string keyFile = lhkorisnika + "_" + kime + ".txt";
-
             string skey = NapraviSKey(path, keyFile);
 
+            string clientName = Formatter.ParseName(Thread.CurrentPrincipal.Identity.Name);
+            //X509Certificate2 certificate = CertManager.GetCertificateFromFile(kime);
+            X509Certificate2 certificate = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, clientName);
+            string publicKey = certificate.GetRSAPublicKey().ToXmlString(false);
 
-            // TODO enkriptuj!
-
-
-            return skey;
+            string enkriptovanSKey = Manager.RSA.EncryptSKey(skey, publicKey);
+            return enkriptovanSKey;
         }
         #endregion
 

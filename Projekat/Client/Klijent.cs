@@ -29,10 +29,13 @@ namespace Client
         public string DobaviSKey(string lhkorisnika, string kime)
         {
             string sKey = kanal.DobaviSKey(lhkorisnika, kime);
-            
-            // TODO dodaj dekripciju privatnim ključem
 
-            return sKey;
+            string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+            X509Certificate2 certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
+            string privateKey = certificate.GetRSAPrivateKey().ToXmlString(true);
+
+            string dekriptovanSKey = Manager.RSA.DecryptSKey(sKey, privateKey);
+            return dekriptovanSKey;
         }
         #endregion
 
