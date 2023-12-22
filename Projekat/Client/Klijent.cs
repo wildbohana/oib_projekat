@@ -31,10 +31,21 @@ namespace Client
             string sKey = kanal.DobaviSKey(lhkorisnika, kime);
 
             string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+            //Console.WriteLine(cltCertCN);
             X509Certificate2 certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
-            string privateKey = certificate.GetRSAPrivateKey().ToXmlString(true);
+            Console.WriteLine(certificate);
+
+            var pkk = certificate.GetRSAPrivateKey();
+            //Console.WriteLine("Dobavio pkk");
+            // Dovde radi, XML puca
+
+            string privateKey = pkk.ToXmlString(true);
+            //string privateKey = certificate.GetRSAPrivateKey().ToXmlString(true);
+
+            Console.WriteLine("RADI");
 
             string dekriptovanSKey = Manager.RSA.DecryptSKey(sKey, privateKey);
+            Console.WriteLine(dekriptovanSKey);
             return dekriptovanSKey;
         }
         #endregion

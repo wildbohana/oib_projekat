@@ -11,3 +11,15 @@ C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Service\obj\Debug\Servic
 C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Service\obj\Debug\Service.csproj.CopyComplete
 C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Service\obj\Debug\Service.exe
 C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Service\obj\Debug\Service.pdb
+C:\Users\wildbohana\Desktop\Projekat\Service\bin\Debug\Service.exe.config
+C:\Users\wildbohana\Desktop\Projekat\Service\bin\Debug\Service.exe
+C:\Users\wildbohana\Desktop\Projekat\Service\bin\Debug\Service.pdb
+C:\Users\wildbohana\Desktop\Projekat\Service\bin\Debug\Common.dll
+C:\Users\wildbohana\Desktop\Projekat\Service\bin\Debug\Manager.dll
+C:\Users\wildbohana\Desktop\Projekat\Service\bin\Debug\Common.pdb
+C:\Users\wildbohana\Desktop\Projekat\Service\bin\Debug\Manager.pdb
+C:\Users\wildbohana\Desktop\Projekat\Service\obj\Debug\Service.csproj.AssemblyReference.cache
+C:\Users\wildbohana\Desktop\Projekat\Service\obj\Debug\Service.csproj.CoreCompileInputs.cache
+C:\Users\wildbohana\Desktop\Projekat\Service\obj\Debug\Service.csproj.CopyComplete
+C:\Users\wildbohana\Desktop\Projekat\Service\obj\Debug\Service.exe
+C:\Users\wildbohana\Desktop\Projekat\Service\obj\Debug\Service.pdb

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography.X509Certificates;
 using System.Security;
+using System.IO;
 
 namespace Manager
 {
@@ -27,18 +28,6 @@ namespace Manager
 			}
 
 			return null;
-		}
-
-		public static X509Certificate2 GetCertificateFromFile(string fileName)
-		{
-			X509Certificate2 certificate = null;
-			return certificate;
-		}
-
-		public static X509Certificate2 GetCertificateFromFile(string fileName, SecureString pwd)
-		{
-			X509Certificate2 certificate = null;
-			return certificate;
 		}
 	}
 }

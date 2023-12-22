@@ -4,3 +4,9 @@ C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Common\obj\Debug\Common.
 C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
 C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Common\obj\Debug\Common.dll
 C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Common\obj\Debug\Common.pdb
+C:\Users\wildbohana\Desktop\Projekat\Common\bin\Debug\Common.dll
+C:\Users\wildbohana\Desktop\Projekat\Common\bin\Debug\Common.pdb
+C:\Users\wildbohana\Desktop\Projekat\Common\obj\Debug\Common.csproj.AssemblyReference.cache
+C:\Users\wildbohana\Desktop\Projekat\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+C:\Users\wildbohana\Desktop\Projekat\Common\obj\Debug\Common.dll
+C:\Users\wildbohana\Desktop\Projekat\Common\obj\Debug\Common.pdb

@@ -15,7 +15,6 @@ namespace Manager
     {
         public static string EncryptSKey(string plainText, string publicKey)
         {
-            // Looks for the certificate's public key to encript message
             RSACryptoServiceProvider csp = new RSACryptoServiceProvider();
             csp.FromXmlString(publicKey);
 

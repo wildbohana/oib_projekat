@@ -45,7 +45,6 @@ namespace Service
             string skey = NapraviSKey(path, keyFile);
 
             string clientName = Formatter.ParseName(Thread.CurrentPrincipal.Identity.Name);
-            //X509Certificate2 certificate = CertManager.GetCertificateFromFile(kime);
             X509Certificate2 certificate = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, clientName);
             string publicKey = certificate.GetRSAPublicKey().ToXmlString(false);
 
