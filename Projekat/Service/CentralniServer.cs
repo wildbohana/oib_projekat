@@ -40,28 +40,18 @@ namespace Service
         // Za klijenta (sa enkripcijom preko javnog ključa)
         public string DobaviSKey(string lhkorisnika, string kime)
         {
+            // Dobavi secret key
             string path = "..\\..\\SecretKeys\\";
             string keyFile = lhkorisnika + "_" + kime + ".txt";
             string skey = NapraviSKey(path, keyFile);
 
-            //TODO delete
-            Console.WriteLine("\nSecret Key:");
-            Console.WriteLine(skey);
-
+            // Dobavi javni ključ iz sertifikata
             string clientName = Formatter.ParseName(Thread.CurrentPrincipal.Identity.Name);
             X509Certificate2 certificate = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, clientName);
             string publicKey = certificate.GetRSAPublicKey().ToXmlString(false);
 
-            //TODO delete
-            Console.WriteLine("\nPublic Key:");
-            Console.WriteLine(publicKey);
-
+            // Enkriptuj skey
             string enkriptovanSKey = Manager.RSA.EncryptSKey(skey, publicKey);
-
-            //TODO delete
-            Console.WriteLine("\nEncrypted Secret Key:");
-            Console.WriteLine(enkriptovanSKey);
-
             return enkriptovanSKey;
         }
         #endregion
@@ -119,11 +109,11 @@ namespace Service
 
             // Prosleđivanje zahteva LB-u
             List<string> rezultat = ProslediZahtevLB(new List<string> { "DobaviPotrosnju", idDec, imeDec, prezimeDec });
-            string odgovor = "\n";
+            string odgovor = "";
 
             foreach (string str in rezultat)
             {
-                odgovor = odgovor + '\t' + str;
+                odgovor = odgovor + '\n' + str;
             }
 
             Console.WriteLine("Dobavljanje potrosnje izvrseno!");
@@ -187,11 +177,11 @@ namespace Service
 
                 // Prosleđivanje zahteva LB-u
                 List<string> rezultat = ProslediZahtevLB(new List<string> { "IzmeniPotrosnju", idDec, novaPotrosnjaDec });
-                string odgovor = "\n";
+                string odgovor = "";
 
                 foreach (string str in rezultat)
                 {
-                    odgovor = odgovor + '\t' + str;
+                    odgovor = odgovor + '\n' + str;
                 }
 
                 Console.WriteLine("Izmena potrosnje izvrsena!");
@@ -201,7 +191,7 @@ namespace Service
             {
                 try
                 {
-                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "IzmeniPotrosnju metoda zahteva Modifikuj permisiju.");
+                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "IzmeniPotrosnju requires Modifikuj permission.");
                 }
                 catch (Exception e)
                 {
@@ -269,11 +259,11 @@ namespace Service
 
                 // Prosleđivanje zahteva LB-u
                 List<string> rezultat = ProslediZahtevLB(new List<string> { "IzmeniID", stariIDDec, noviIDDec });
-                string odgovor = "\n";
+                string odgovor = "";
 
                 foreach (string str in rezultat)
                 {
-                    odgovor = odgovor + '\t' + str;
+                    odgovor = odgovor + '\n' + str;
                 }
 
                 Console.WriteLine("Izmena ID izvrsena!");
@@ -283,7 +273,7 @@ namespace Service
             {
                 try
                 {
-                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "IzmeniID metoda zahteva Modifikuj permisiju.");
+                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "IzmeniID requires Modifikuj permisison.");
                 }
                 catch (Exception e)
                 {
@@ -369,11 +359,11 @@ namespace Service
 
                 // Prosleđivanje zahteva LB-u
                 List<string> rezultat = ProslediZahtevLB(new List<string> { "DodajBrojilo", idDec, imeDec, prezimeDec, potrosnjaDec });
-                string odgovor = "\n";
+                string odgovor = "";
 
                 foreach (string str in rezultat)
                 {
-                    odgovor = odgovor + '\t' + str;
+                    odgovor = odgovor + '\n' + str;
                 }
 
                 Console.WriteLine("Dodavanje brojila izvresno!");
@@ -383,7 +373,7 @@ namespace Service
             {
                 try
                 {
-                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "DodajBrojilo metoda zahteva DodajEntitet permisiju.");
+                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "DodajBrojilo requires DodajEntitet permission.");
                     
                 }
                 catch (Exception e)
@@ -439,11 +429,11 @@ namespace Service
 
                 // Prosleđivanje zahteva LB-u
                 List<string> rezultat = ProslediZahtevLB(new List<string> { "ObrisiBrojilo", idDec });
-                string odgovor = "\n";
+                string odgovor = "";
 
                 foreach (string str in rezultat)
                 {
-                    odgovor = odgovor + '\t' + str;
+                    odgovor = odgovor + '\n' + str;
                 }
 
                 Console.WriteLine("Brisanje brojila izvrseno!");
@@ -453,7 +443,7 @@ namespace Service
             {
                 try
                 {
-                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "ObrisiBrojilo metoda zahteva ObrisiEntitet permisiju.");
+                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "ObrisiBrojilo requires ObrisiEntitet permission.");
                 }
                 catch (Exception e)
                 {
@@ -491,11 +481,11 @@ namespace Service
 
                 // Prosleđivanje zahteva LB-u
                 List<string> rezultat = ProslediZahtevLB(new List<string> { "ObrisiBazu" });
-                string odgovor = "\n";
+                string odgovor = "";
 
                 foreach (string str in rezultat)
                 {
-                    odgovor = odgovor + '\t' + str;
+                    odgovor = odgovor + '\n' + str;
                 }
 
                 Console.WriteLine("Brisanje baze izvrseno!");
@@ -505,7 +495,7 @@ namespace Service
             {
                 try
                 {
-                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "ObrisiBazu metoda zahteva ObrisiBazu permisiju.");
+                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "ObrisiBazu requires ObrisiBazu permission.");
                 }
                 catch (Exception e)
                 {
@@ -543,11 +533,11 @@ namespace Service
 
                 // Prosleđivanje zahteva LB-u
                 List<string> rezultat = ProslediZahtevLB(new List<string> { "ArhivirajBazu" });
-                string odgovor = "\n";
+                string odgovor = "";
 
                 foreach (string str in rezultat)
                 {
-                    odgovor = odgovor + '\t' + str;
+                    odgovor = odgovor + '\n' + str;
                 }
 
                 Console.WriteLine("Arhiviranje baze izvrseno!");
@@ -557,7 +547,7 @@ namespace Service
             {
                 try
                 {
-                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "ArhivirajBazu metoda zahteva ArhivirajBazu permisiju.");
+                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "ArhivirajBazu requires ArhivirajBazu permission.");
                 }
                 catch (Exception e)
                 {
@@ -583,9 +573,9 @@ namespace Service
             ChannelFactory<ILoadBalanser> kanal = new ChannelFactory<ILoadBalanser>(binding, new EndpointAddress(adresa));
             ILoadBalanser proksi = kanal.CreateChannel();
 
-            Console.WriteLine("Zahtev je prosledjen balanseru opterecenja.");
+            Console.WriteLine("\nZahtev je prosledjen balanseru opterecenja.");
+            
             List<string> rezultat = proksi.DelegirajZahtev(zahtev);
-
             return rezultat;
         }
         #endregion

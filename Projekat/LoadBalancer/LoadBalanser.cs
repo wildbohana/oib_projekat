@@ -17,9 +17,14 @@ namespace LoadBalancer
         {
             List<string> rezultat = new List<string>();
             if (PrijavaRadnika.Radnici.Count > 0)
+            {
+                // Po principu kružnog bafera
                 poslednjiRadnik = (poslednjiRadnik + 1) % (PrijavaRadnika.Radnici.Count);
+            }
             else
+            {
                 poslednjiRadnik = -1;
+            }
 
             // Ako postoje radnici, proveri da li je neki od njih slobodan
             if (PrijavaRadnika.Radnici.Count > 0)
@@ -27,14 +32,17 @@ namespace LoadBalancer
                 int i = 0;
                 foreach (IRadnik radnik in PrijavaRadnika.Radnici.Values)
                 {
-                    if (i == poslednjiRadnik) 
-                        return radnik.ObradaZahteva(zahtev);          
+                    if (i == poslednjiRadnik)
+                    {
+                        Console.WriteLine("[ZAHTEV] Zahtev je prosleđen radniku sa ID=" + i);
+                        return radnik.ObradaZahteva(zahtev);
+                    }
                     i++;
                 }
             }
             else
             {
-                Console.WriteLine("Trenutno nema slobodnih radnika!");
+                Console.WriteLine("[PROBLEM] Trenutno nema slobodnih radnika!");
             }
 
             return rezultat;

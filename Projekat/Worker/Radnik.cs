@@ -116,7 +116,7 @@ namespace Worker
 
                     // Poruka koja se vraća korisniku
                     string poruka = "";
-                    poruka += "Potrosnja za ID: " + bazaID + ", ime i prezime: " + bazaIme + " " + bazaPrezime + " je:\n";
+                    poruka += "\tPotrosnja za ID: " + bazaID + "\n\tIme: " + bazaIme + "\n\tPrezime: " + bazaPrezime + "\n";
                     poruka += "\tZona: " + imeZone + " [" + cenaZone + " din/kWh]" + "\n";
                     poruka += "\tPotrosnja: " + potrosnja.ToString() + "\n";
                     poruka += "\tCena: " + cena + ".\n";
@@ -180,7 +180,7 @@ namespace Worker
                 baza.RemoveAt(i);
                 UpisiUFajl(baza);
 
-                return new List<string> { "OK", "Brojilo: " + bazaID + ", ime i prezime: " + bazaIme + " " + bazaPrezime + " - obrisano." };
+                return new List<string> { "OK", "Brojilo: " + bazaID + "\nIme: " + bazaIme + "\nPrezime: " + bazaPrezime + "\n--- OBRISANO ---" };
             }
             else
             {
@@ -204,7 +204,7 @@ namespace Worker
                     baza[i] = bazaID + "," + bazaIme + "," + bazaPrezime + "," + novaVrednost;
                     UpisiUFajl(baza);
 
-                    return new List<string> { "OK", "Vrednost izmenjena. Stara potrosnja: " + bazaPotrosnja + ". Nova potrosnja: " + novaVrednost + "." };
+                    return new List<string> { "OK", "Vrednost izmenjena. \nStara potrosnja: " + bazaPotrosnja + ".\nNova potrosnja: " + novaVrednost + "." };
                 }
 
                 i++;
@@ -240,7 +240,7 @@ namespace Worker
                 {
                     baza[i] = noviID + "," + bazaIme + "," + bazaPrezime + "," + bazaPotrosnja;
                     UpisiUFajl(baza);
-                    return new List<string> { "OK", "ID izmenjen. Stari ID: " + stariID + ". Novi ID: " + noviID + "." };
+                    return new List<string> { "OK", "ID izmenjen.\nStari ID: " + stariID + ".\nNovi ID: " + noviID + "." };
                 }
 
                 i++;

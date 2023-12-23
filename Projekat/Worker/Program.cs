@@ -78,7 +78,7 @@ namespace Worker
 
             // Nakon što otvori host, prijavljuje se na LB
             proksi.Prijava(id);
-            Console.WriteLine("Radnik je pokrenut. Pritisni bilo koji taster za gasenje.");
+            Console.WriteLine("Radnik je pokrenut. Pritisni bilo koji taster za gasenje.\n");
             Console.ReadKey();
 
             // Kada se ugasi, odjavljuje se sa LB

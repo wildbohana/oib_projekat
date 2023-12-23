@@ -61,7 +61,7 @@ namespace Client
                 int i = 0;
                 if (!int.TryParse(Console.ReadLine(), out i))
                 {
-                    Console.WriteLine("Pogresan izbor! Tuzicu te mami!");
+                    Console.WriteLine("\nPogresan izbor!");
                     continue;
                 }
 

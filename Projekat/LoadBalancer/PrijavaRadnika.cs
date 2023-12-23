@@ -32,6 +32,8 @@ namespace LoadBalancer
             ChannelFactory<IRadnik> kanal = new ChannelFactory<IRadnik>(binding, new EndpointAddress("net.tcp://localhost:" + portRadnika + "/Radnik"));
             IRadnik proksi = kanal.CreateChannel();
             Radnici.TryAdd(id, proksi);
+
+            Console.WriteLine("[PRIJAVA] Novi radnik je prijavljen sa ID=" + id);
         }
         #endregion
 
@@ -40,6 +42,7 @@ namespace LoadBalancer
         public void Odjava(int id)
         {
             Radnici.TryRemove(id, out _);
+            Console.WriteLine("[ODJAVA] Radnik sa ID=" + id + " je odjavljen");
         }
         #endregion
 

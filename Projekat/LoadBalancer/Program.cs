@@ -51,7 +51,7 @@ namespace LoadBalancer
             try
             {
                 host2.Open();
-                Console.WriteLine("LoadBalancer je pokrenut. Pritisni bilo koji taster za gasenje.");
+                Console.WriteLine("LoadBalancer je pokrenut. Pritisni bilo koji taster za gasenje.\n");
                 Console.ReadKey();
             }
             catch (Exception e)
