@@ -18,7 +18,7 @@ namespace Manager
 
 			X509Certificate2Collection certCollection = store.Certificates.Find(X509FindType.FindBySubjectName, subjectName, true);
 
-			// Check whether the subjectName of the certificate is exactly the same as the given "subjectName"
+			// Proverava da li je subjectName sertifikata isto kao i prosleđeni parametar
 			foreach (X509Certificate2 c in certCollection)
 			{
 				if (c.SubjectName.Name.Equals(string.Format("CN={0}", subjectName)))
@@ -29,5 +29,15 @@ namespace Manager
 
 			return null;
 		}
-	}
+
+		// Za klijentske sertifikate, oni moraju imati Exportable flag zbog privatnih ključeva
+        public static X509Certificate2 GetPfxCertificateFromStorage(string subjectName)
+        {
+			// Projekat\Client\Certs\
+            string path = "..\\..\\Certs\\";
+            string filename = path + subjectName + ".pfx";
+            X509Certificate2 cert = new X509Certificate2(filename, "12345", X509KeyStorageFlags.Exportable);
+            return cert;
+        }
+    }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.ServiceModel;
@@ -29,23 +30,27 @@ namespace Client
         public string DobaviSKey(string lhkorisnika, string kime)
         {
             string sKey = kanal.DobaviSKey(lhkorisnika, kime);
+            string dekriptovanSKey = string.Empty;
 
-            string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
-            //Console.WriteLine(cltCertCN);
-            X509Certificate2 certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
-            Console.WriteLine(certificate);
+            try
+            {
+                string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
 
-            var pkk = certificate.GetRSAPrivateKey();
-            //Console.WriteLine("Dobavio pkk");
-            // Dovde radi, XML puca
+                // Bilo kakav Export ne radi kad se ovako dobavi sertifikat jer nemamo dobar flag
+                //X509Certificate2 certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
 
-            string privateKey = pkk.ToXmlString(true);
-            //string privateKey = certificate.GetRSAPrivateKey().ToXmlString(true);
+                // Napravila sam workaround, bolje od toga ne mogu
+                // Ne učitava se sertifikat iz Store-a, nego direktno iz fajla koji klijent ima kod sebe
+                X509Certificate2 certificate = CertManager.GetPfxCertificateFromStorage(cltCertCN);
 
-            Console.WriteLine("RADI");
+                string privateKey = certificate.GetRSAPrivateKey().ToXmlString(true);
+                dekriptovanSKey = Manager.RSA.DecryptSKey(sKey, privateKey);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
 
-            string dekriptovanSKey = Manager.RSA.DecryptSKey(sKey, privateKey);
-            Console.WriteLine(dekriptovanSKey);
             return dekriptovanSKey;
         }
         #endregion

@@ -28,7 +28,7 @@ namespace Manager
         {
             RSACryptoServiceProvider csp = new RSACryptoServiceProvider();
             csp.FromXmlString(privateKey);
-
+            
             byte[] byteMsg = Convert.FromBase64String(cipherText);
             byte[] byteText = csp.Decrypt(byteMsg, false);
 

@@ -44,11 +44,24 @@ namespace Service
             string keyFile = lhkorisnika + "_" + kime + ".txt";
             string skey = NapraviSKey(path, keyFile);
 
+            //TODO delete
+            Console.WriteLine("\nSecret Key:");
+            Console.WriteLine(skey);
+
             string clientName = Formatter.ParseName(Thread.CurrentPrincipal.Identity.Name);
             X509Certificate2 certificate = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, clientName);
             string publicKey = certificate.GetRSAPublicKey().ToXmlString(false);
 
+            //TODO delete
+            Console.WriteLine("\nPublic Key:");
+            Console.WriteLine(publicKey);
+
             string enkriptovanSKey = Manager.RSA.EncryptSKey(skey, publicKey);
+
+            //TODO delete
+            Console.WriteLine("\nEncrypted Secret Key:");
+            Console.WriteLine(enkriptovanSKey);
+
             return enkriptovanSKey;
         }
         #endregion

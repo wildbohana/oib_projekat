@@ -24,15 +24,3 @@ C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\obj\Debug\L
 C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\obj\Debug\LoadBalancer.csproj.CopyComplete
 C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\obj\Debug\LoadBalancer.exe
 C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\LoadBalancer\obj\Debug\LoadBalancer.pdb
-C:\Users\wildbohana\Desktop\Projekat\LoadBalancer\bin\Debug\LoadBalancer.exe.config
-C:\Users\wildbohana\Desktop\Projekat\LoadBalancer\bin\Debug\LoadBalancer.exe
-C:\Users\wildbohana\Desktop\Projekat\LoadBalancer\bin\Debug\LoadBalancer.pdb
-C:\Users\wildbohana\Desktop\Projekat\LoadBalancer\bin\Debug\Common.dll
-C:\Users\wildbohana\Desktop\Projekat\LoadBalancer\bin\Debug\Manager.dll
-C:\Users\wildbohana\Desktop\Projekat\LoadBalancer\bin\Debug\Common.pdb
-C:\Users\wildbohana\Desktop\Projekat\LoadBalancer\bin\Debug\Manager.pdb
-C:\Users\wildbohana\Desktop\Projekat\LoadBalancer\obj\Debug\LoadBalancer.csproj.AssemblyReference.cache
-C:\Users\wildbohana\Desktop\Projekat\LoadBalancer\obj\Debug\LoadBalancer.csproj.CoreCompileInputs.cache
-C:\Users\wildbohana\Desktop\Projekat\LoadBalancer\obj\Debug\LoadBalancer.csproj.CopyComplete
-C:\Users\wildbohana\Desktop\Projekat\LoadBalancer\obj\Debug\LoadBalancer.exe
-C:\Users\wildbohana\Desktop\Projekat\LoadBalancer\obj\Debug\LoadBalancer.pdb

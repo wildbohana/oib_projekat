@@ -7,12 +7,3 @@ C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Manager\obj\Debug\Manage
 C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Manager\obj\Debug\Manager.dll
 C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Manager\obj\Debug\Manager.pdb
 C:\Users\DT User\OneDrive\Desktop\oib_projekat\Projekat\Manager\obj\Debug\Manager.Audit.AuditEventFile.resources
-C:\Users\wildbohana\Desktop\Projekat\Manager\bin\Debug\Manager.dll
-C:\Users\wildbohana\Desktop\Projekat\Manager\bin\Debug\Manager.pdb
-C:\Users\wildbohana\Desktop\Projekat\Manager\obj\Debug\Manager.csproj.AssemblyReference.cache
-C:\Users\wildbohana\Desktop\Projekat\Manager\obj\Debug\Manager.Audit.AuditEventFile.resources
-C:\Users\wildbohana\Desktop\Projekat\Manager\obj\Debug\Manager.RBAC.RolesConfigFile.resources
-C:\Users\wildbohana\Desktop\Projekat\Manager\obj\Debug\Manager.csproj.GenerateResource.cache
-C:\Users\wildbohana\Desktop\Projekat\Manager\obj\Debug\Manager.csproj.CoreCompileInputs.cache
-C:\Users\wildbohana\Desktop\Projekat\Manager\obj\Debug\Manager.dll
-C:\Users\wildbohana\Desktop\Projekat\Manager\obj\Debug\Manager.pdb
