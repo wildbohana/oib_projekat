@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.ServiceModel;
@@ -29,7 +30,28 @@ namespace Client
         public string DobaviSKey(string lhkorisnika, string kime)
         {
             string sKey = kanal.DobaviSKey(lhkorisnika, kime);
-            return sKey;
+            string dekriptovanSKey = string.Empty;
+
+            try
+            {
+                string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+
+                // Bilo kakav Export ne radi kad se ovako dobavi sertifikat jer nemamo dobar flag
+                //X509Certificate2 certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
+
+                // Napravila sam workaround, bolje od toga ne mogu
+                // Ne učitava se sertifikat iz Store-a, nego direktno iz fajla koji klijent ima kod sebe
+                X509Certificate2 certificate = CertManager.GetPfxCertificateFromStorage(cltCertCN);
+
+                string privateKey = certificate.GetRSAPrivateKey().ToXmlString(true);
+                dekriptovanSKey = Manager.RSA.DecryptSKey(sKey, privateKey);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return dekriptovanSKey;
         }
         #endregion
 

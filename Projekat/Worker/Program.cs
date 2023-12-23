@@ -19,16 +19,14 @@ namespace Worker
         {
             #region PRIJAVA RADNIKA NA LB
             // Sertifikat
-            string srvCertCN = "loadbalancer";
-            // Osnovni port + broj aktivnih radnika = broj porta novog radnika
-            int osnovniPort = 9900;
+            string lbCertCN = "loadbalancer";
 
             // Server za prijavu radnika na sistem
             NetTcpBinding binding1 = new NetTcpBinding();
             binding1.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
 
             // Podešavanje kanala ka LB (sertifikati)
-            X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, srvCertCN);
+            X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, lbCertCN);
             EndpointAddress adresa1 = new EndpointAddress(new Uri("net.tcp://localhost:9997/PrijavaRadnika"), new X509CertificateEndpointIdentity(srvCert));
             ChannelFactory<IPrijavaRadnika> kanal = new ChannelFactory<IPrijavaRadnika>(binding1, adresa1);
 
@@ -38,13 +36,13 @@ namespace Worker
 
             try
             {
-                string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+                string workerCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
                 
                 kanal.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = X509CertificateValidationMode.ChainTrust;
                 kanal.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
 
                 // Podešavanje klijentskih sertifikata na kanalu
-                kanal.Credentials.ClientCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
+                kanal.Credentials.ClientCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, workerCertCN);
                 
                 proksi = kanal.CreateChannel();
                 id = proksi.DodeliID();
@@ -62,6 +60,9 @@ namespace Worker
             #endregion
 
             #region POKRETANJE RADNIKA
+            // Osnovni port + broj aktivnih radnika = broj porta novog radnika
+            int osnovniPort = 9900;
+
             // Kada dobije ID, radnik pokreće svoj host
             NetTcpBinding binding2 = new NetTcpBinding();
             int noviPort = osnovniPort + id;

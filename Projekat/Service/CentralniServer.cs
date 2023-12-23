@@ -20,25 +20,49 @@ namespace Service
 {
     public class CentralniServer : IServer
     {
-
-        ClientActionLogger cLog = new ClientActionLogger();
- 
-
         #region SKEY
         private string NapraviSKey(string path, string keyFile)
-
         {
             string sKey = SecretKey.GetKey(path, keyFile);
             return sKey;
         }
 
-        public string DobaviSKey(string lhkorisnika, string kime)
+        // Za server (bez enkripcije)
+        private string UcitajSKey(string lhkorisnika, string kime)
         {
             string path = "..\\..\\SecretKeys\\";
             string keyFile = lhkorisnika + "_" + kime + ".txt";
 
             string skey = NapraviSKey(path, keyFile);
             return skey;
+        }
+
+        // Za klijenta (sa enkripcijom preko javnog ključa)
+        public string DobaviSKey(string lhkorisnika, string kime)
+        {
+            string path = "..\\..\\SecretKeys\\";
+            string keyFile = lhkorisnika + "_" + kime + ".txt";
+            string skey = NapraviSKey(path, keyFile);
+
+            //TODO delete
+            Console.WriteLine("\nSecret Key:");
+            Console.WriteLine(skey);
+
+            string clientName = Formatter.ParseName(Thread.CurrentPrincipal.Identity.Name);
+            X509Certificate2 certificate = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, clientName);
+            string publicKey = certificate.GetRSAPublicKey().ToXmlString(false);
+
+            //TODO delete
+            Console.WriteLine("\nPublic Key:");
+            Console.WriteLine(publicKey);
+
+            string enkriptovanSKey = Manager.RSA.EncryptSKey(skey, publicKey);
+
+            //TODO delete
+            Console.WriteLine("\nEncrypted Secret Key:");
+            Console.WriteLine(enkriptovanSKey);
+
+            return enkriptovanSKey;
         }
         #endregion
 
@@ -57,7 +81,7 @@ namespace Service
             string fullname = windowsIdentity.Name.ToString();
             string lhkorisnika = fullname.Split('\\')[0];
             string kime = fullname.Split('\\')[1];
-            string sKey = DobaviSKey(lhkorisnika, kime);
+            string sKey = UcitajSKey(lhkorisnika, kime);
 
             string idDec = null;
             string imeDec = null;
@@ -102,10 +126,11 @@ namespace Service
                 odgovor = odgovor + '\t' + str;
             }
 
+            Console.WriteLine("Dobavljanje potrosnje izvrseno!");
             return odgovor;
         }
 
-        //Operator
+        // Operator
         public string IzmeniPotrosnju(string id, string novaPotrosnja)
         {
             //audit
@@ -126,7 +151,7 @@ namespace Service
                 string fullname = windowsIdentity.Name.ToString();
                 string lhkorisnika = fullname.Split('\\')[0];
                 string kime = fullname.Split('\\')[1];
-                string sKey = DobaviSKey(lhkorisnika, kime);
+                string sKey = UcitajSKey(lhkorisnika, kime);
 
                 string idDec = null;
                 string novaPotrosnjaDec = null;
@@ -149,7 +174,6 @@ namespace Service
                 {
                     Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
                 }
-                //audit
 
                 try
                 {
@@ -169,27 +193,25 @@ namespace Service
                 {
                     odgovor = odgovor + '\t' + str;
                 }
-                cLog.LogAction(userName, "Izmeni potrosnju", true);
-                Console.WriteLine("Izmeni potrosnju executed!");
 
+                Console.WriteLine("Izmena potrosnje izvrsena!");
                 return odgovor;
             }
             else
             {
                 try
                 {
-                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "IzmeniPotrosnju method need Modifikuj permission.");
+                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "IzmeniPotrosnju metoda zahteva Modifikuj permisiju.");
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
-                cLog.LogAction(userName, "IzmeniPotrosnju", false);
-                throw new FaultException("User " + userName + " try to call IzmeniPotrosnju method. IzmeniPotrosnju method need  Modifikuj permission.");
+                throw new FaultException("Korisnik " + userName + " je pokusao da pozove IzmeniPotrosnju. Za nju je potrebna Modifikuj permisija.");
             }
         }
 
-        //Operator
+        // Operator
         public string IzmeniID(string stariID, string noviID)
         {
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
@@ -209,7 +231,7 @@ namespace Service
                 string fullname = windowsIdentity.Name.ToString();
                 string lhkorisnika = fullname.Split('\\')[0];
                 string kime = fullname.Split('\\')[1];
-                string sKey = DobaviSKey(lhkorisnika, kime);
+                string sKey = UcitajSKey(lhkorisnika, kime);
 
                 string stariIDDec = string.Empty;
                 string noviIDDec = string.Empty;
@@ -233,7 +255,7 @@ namespace Service
                 {
                     Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
                 }
-                //
+                
                 try
                 {
                     Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);
@@ -253,27 +275,26 @@ namespace Service
                 {
                     odgovor = odgovor + '\t' + str;
                 }
-                cLog.LogAction(userName, "IzmeniID", true);
-                Console.WriteLine("IzmeniID executed!");
 
+                Console.WriteLine("Izmena ID izvrsena!");
                 return odgovor;
             }
             else
             {
                 try
                 {
-                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "IzmeniID method need Modifikuj permission.");
+                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "IzmeniID metoda zahteva Modifikuj permisiju.");
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
-                cLog.LogAction(userName, "IzmeniID", false);
-                throw new FaultException("User " + userName + " try to call IzmeniID method. IzmeniID method need  Modifikuj permission.");
+
+                throw new FaultException("Korisnik " + userName + " je pokusao da pozove IzmeniID metodu. Za nju je neophodna Modifikuj permisija.");
             }
         }
 
-        //Administrator
+        // Administrator
         public string DodajBrojilo(string id, string ime, string prezime, string potrosnja)
         {
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
@@ -293,7 +314,7 @@ namespace Service
                 string fullname = windowsIdentity.Name.ToString();
                 string lhkorisnika = fullname.Split('\\')[0];
                 string kime = fullname.Split('\\')[1];
-                string sKey = DobaviSKey(lhkorisnika, kime);
+                string sKey = UcitajSKey(lhkorisnika, kime);
 
                 string idDec = string.Empty;
                 string imeDec = string.Empty;
@@ -336,7 +357,7 @@ namespace Service
                 {
                     Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
                 }
-                //
+                
                 try
                 {
                     Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);
@@ -354,28 +375,26 @@ namespace Service
                 {
                     odgovor = odgovor + '\t' + str;
                 }
-                cLog.LogAction(userName, "DodajBrojilo", true);
-                Console.WriteLine("DodajBrojilo executed!");
 
+                Console.WriteLine("Dodavanje brojila izvresno!");
                 return odgovor;
             }
             else
             {
                 try
                 {
-                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "DodajBrojilo method need DodajEntitet permission.");
+                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "DodajBrojilo metoda zahteva DodajEntitet permisiju.");
                     
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
-                cLog.LogAction(userName, "DodajBrojilo", false);
-                throw new FaultException("User " + userName + " try to call DodajBrojilo method. DodajBrojilo method need DodajEntitet permission.");
+                throw new FaultException("Korisnik " + userName + " je pokusao da pozove DodajBrojilo metodu. Ona zahteva DodajEntitet permisiju.");
             }
         }
 
-        //Administrator
+        // Administrator
         public string ObrisiBrojilo(string id)
         {
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
@@ -395,7 +414,7 @@ namespace Service
                 string fullname = windowsIdentity.Name.ToString();
                 string lhkorisnika = fullname.Split('\\')[0];
                 string kime = fullname.Split('\\')[1];
-                string sKey = DobaviSKey(lhkorisnika, kime);
+                string sKey = UcitajSKey(lhkorisnika, kime);
 
                 string idDec = string.Empty;
 
@@ -408,7 +427,7 @@ namespace Service
                 {
                     Console.WriteLine("Dekripcija neuspesna. Razlog: {0}", e.Message);
                 }
-                //
+                
                 try
                 {
                     Audit.AuthorizationSuccess(userName, OperationContext.Current.IncomingMessageHeaders.Action);
@@ -426,26 +445,25 @@ namespace Service
                 {
                     odgovor = odgovor + '\t' + str;
                 }
-                cLog.LogAction(userName, "ObrisiBrojilo", true);
-                Console.WriteLine("ObrisiBrojilo executed!");
+
+                Console.WriteLine("Brisanje brojila izvrseno!");
                 return odgovor;
             }
             else
             {
                 try
                 {
-                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "ObrisiBrojilo method need ObrisiEntitet permission.");
+                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "ObrisiBrojilo metoda zahteva ObrisiEntitet permisiju.");
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
-                cLog.LogAction(userName, "ObrisiBrojilo", false);
-                throw new FaultException("User " + userName + " try to call ObrisiBrojilo method. ObrisiBrojilo method need ObrisiEntitet permission.");
+                throw new FaultException("Korisnik " + userName + " je pokusao da pozove ObrisiBrojilo metodu. Ona zahteva ObrisiEntitet permisiju.");
             }
         }
 
-        //Superadministrator
+        // Superadministrator
         public string ObrisiBazu()
         {
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
@@ -479,27 +497,25 @@ namespace Service
                 {
                     odgovor = odgovor + '\t' + str;
                 }
-                cLog.LogAction(userName, "ObrisiBazu", true);
-                Console.WriteLine("ObrisiBazu executed!");
 
+                Console.WriteLine("Brisanje baze izvrseno!");
                 return odgovor;
             }
             else
             {
                 try
                 {
-                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "ObrisiBazu method need ObrisiBazu permission.");
+                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "ObrisiBazu metoda zahteva ObrisiBazu permisiju.");
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
-                cLog.LogAction(userName, "ObrisiBazu", false);
-                throw new FaultException("User " + userName + " try to call ObrisiBazu method. ObrisiBazu method need ObrisiBazu permission.");
+                throw new FaultException("Korisnik " + userName + " je pokusao da pozove ObrisiBazu metodu. Ona zahteva ObrisiBazu permisiju.");
             }
         }
 
-        //Superadministrator
+        // Superadministrator
         public string ArhivirajBazu()
         {
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
@@ -533,23 +549,21 @@ namespace Service
                 {
                     odgovor = odgovor + '\t' + str;
                 }
-                cLog.LogAction(userName, "ArhivirajBazu", true);
-                Console.WriteLine("ArhivirajBazu executed!");
 
+                Console.WriteLine("Arhiviranje baze izvrseno!");
                 return odgovor;
             }
             else
             {
                 try
                 {
-                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "ArhivirajBazu method need ArhivirajBazu permission.");
+                    Audit.AuthorizationFailed(userName, OperationContext.Current.IncomingMessageHeaders.Action, "ArhivirajBazu metoda zahteva ArhivirajBazu permisiju.");
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
-                cLog.LogAction(userName, "ArhivirajBazu", false);
-                throw new FaultException("User " + userName + " try to call ArhivirajBazu method. ArhivirajBazu method need ArhivirajBazu permission.");
+                throw new FaultException("Korisnik " + userName + " je pokusao da pozove ArhivirajBazu metodu. Ona zahteva ArhivirajBazu permisiju.");
             }
         }
         #endregion
