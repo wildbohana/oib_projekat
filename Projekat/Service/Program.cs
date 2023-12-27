@@ -36,7 +36,7 @@ namespace Service
             host.Description.Behaviors.Remove<ServiceSecurityAuditBehavior>();
             host.Description.Behaviors.Add(newAuditBehavior);
 
-            // Dodavanje custom sigurnosne polise
+            // Dodavanje custom sigurnosne polise (zbog RBAC)
             host.Authorization.PrincipalPermissionMode = PrincipalPermissionMode.Custom;
             List<IAuthorizationPolicy> policies = new List<IAuthorizationPolicy>
             {

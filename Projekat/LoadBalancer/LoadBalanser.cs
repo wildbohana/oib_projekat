@@ -35,7 +35,7 @@ namespace LoadBalancer
                     if (i == poslednjiRadnik)
                     {
                         Console.WriteLine("[ZAHTEV] Zahtev je prosleđen radniku sa ID=" + i);
-                        return radnik.ObradaZahteva(zahtev);
+                        rezultat = radnik.ObradaZahteva(zahtev);
                     }
                     i++;
                 }

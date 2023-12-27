@@ -58,7 +58,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RBAC\CustomAuthorizationPolicy.cs" />
     <Compile Include="RBAC\CustomPrincipal.cs" />
-    <Compile Include="RBAC\Formatter.cs" />
     <Compile Include="RBAC\RolesConfig.cs" />
     <Compile Include="RBAC\RolesConfigFile.Designer.cs">
       <AutoGen>True</AutoGen>

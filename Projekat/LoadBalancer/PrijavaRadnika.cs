@@ -22,17 +22,19 @@ namespace LoadBalancer
         // Prijava radnika
         public void Prijava(int id)
         {
+            // Pravljenje binding-a za novog radnika
             NetTcpBinding binding = new NetTcpBinding();
             binding.Security.Mode = SecurityMode.Transport;
             binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
 
+            // Pravljenje kanala za novog radnika
             int portRadnika = this.port + id;
-
             ChannelFactory<IRadnik> kanal = new ChannelFactory<IRadnik>(binding, new EndpointAddress("net.tcp://localhost:" + portRadnika + "/Radnik"));
             IRadnik proksi = kanal.CreateChannel();
-            Radnici.TryAdd(id, proksi);
 
+            // Dodavanje novog radnika u rečnik sa ostalim radnicima
+            Radnici.TryAdd(id, proksi);
             Console.WriteLine("[PRIJAVA] Novi radnik je prijavljen sa ID=" + id);
         }
         #endregion
@@ -60,6 +62,7 @@ namespace LoadBalancer
             return Radnici.Count();
         }
 
+        // Metoda iz interfejsa koju pozivaju novi radnici
         public int DodeliID()
         {
             return GenerisiID();

@@ -66,6 +66,9 @@ namespace LoadBalancer
                 host2.Close();
                 host1.Close();
             }
+
+            host2.Close();
+            host1.Close();
             #endregion
         }
     }

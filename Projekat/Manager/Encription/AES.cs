@@ -20,7 +20,7 @@ namespace Manager
         public static void EncryptString(string inMessage, out string outMessage, string secretKey)
         {
             byte[] forEncryption = Encoding.Default.GetBytes(inMessage);        // UTF-16 string
-            byte[] key = Convert.FromBase64String(secretKey);                   // 8-bit  string
+            byte[] key = Convert.FromBase64String(secretKey);                   // 6-bit  string
             byte[] encryptedMessage = null;
 
             AesCryptoServiceProvider aesCryptoProvider = new AesCryptoServiceProvider

@@ -19,7 +19,7 @@ namespace Manager
             csp.FromXmlString(publicKey);
 
             byte[] byteText = Convert.FromBase64String(plainText);
-            byte[] byteMsg = csp.Encrypt(byteText, false);
+            byte[] byteMsg = csp.Encrypt(byteText, false);      // false -> koristiće PKCS padding
 
             return Convert.ToBase64String(byteMsg);
         }
@@ -30,7 +30,7 @@ namespace Manager
             csp.FromXmlString(privateKey);
             
             byte[] byteMsg = Convert.FromBase64String(cipherText);
-            byte[] byteText = csp.Decrypt(byteMsg, false);
+            byte[] byteText = csp.Decrypt(byteMsg, false);      // false -> koristiće PKCS padding
 
             return Convert.ToBase64String(byteText);
         }

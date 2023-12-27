@@ -37,7 +37,7 @@ namespace Service
             return skey;
         }
 
-        // Za klijenta (sa enkripcijom preko javnog ključa)
+        // Za klijenta (sa enkripcijom preko javnog ključa klijenta)
         public string DobaviSKey(string lhkorisnika, string kime)
         {
             // Dobavi secret key
@@ -123,7 +123,6 @@ namespace Service
         // Operator
         public string IzmeniPotrosnju(string id, string novaPotrosnja)
         {
-            //audit
             CustomPrincipal principal = Thread.CurrentPrincipal as CustomPrincipal;
             string userName = Formatter.ParseName(principal.Identity.Name);
 
@@ -576,6 +575,8 @@ namespace Service
             Console.WriteLine("\nZahtev je prosledjen balanseru opterecenja.");
             
             List<string> rezultat = proksi.DelegirajZahtev(zahtev);
+            kanal.Close();
+
             return rezultat;
         }
         #endregion
